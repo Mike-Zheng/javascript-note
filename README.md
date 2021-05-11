@@ -12,6 +12,8 @@
 |---- | ---------
 |1  | [Execution Context 執行環境](#Execution-Context-執行環境) |
 |2  | [Lexical Environment 詞法環境](#Lexical-Environment-詞法環境) |
+|3  | [Hoisting 提升](#Hoisting-提升) |
+
 
 
 
@@ -110,7 +112,7 @@
      * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
      * [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
 
-     **[Back to Top](#table-of-contents)**
+     **[🔝 Back to Top](#table-of-contents)**
 
 
 
@@ -128,7 +130,7 @@
           let text = 'hello world!'
         }
         ```
-      * 每當function被呼叫前的創立階段時，都會產生一組新的語彙環境 (`Lexical Environment`)，因此**function的作用域與其相關環境變數在函數創立的時候就已經決定**。
+      * 每當function被呼叫前的創立階段時，都會產生一組新的語彙環境 (`Lexical Environment`)，因此function的作用域與其相關環境變數在此**function `Execution Context` 創立的時候**就已經決定。
       * 當 `Execution Stack` 執行到此function的 `Execution Context`時，也就是invoke 此function時，會依照**已建立**的`Lexical Environment` 環境執行其內容。
 
 
@@ -140,15 +142,15 @@
       * `Environment Record` 環境記錄器
         `Environment Record`為存放 變數 與 function宣告 的地方
         `Environment Record` 分為兩種
-          * `Declarative environment record` 聲明式環境記錄器存儲變量、函數和參數。
-          * `Object environment record` 對象環境記錄器用來定義出現在全局上下文中的變量和函數的關係。
+          * `Declarative environment record` **聲明式環境記錄器** 存儲變數、函數和參數。
+          * `Object environment record` **對象環境記錄器** 用來定義出現在`Execution Context`中的變量和函數的關係。
 
         **note**
-        * 在全局環境中，環境記錄器是對象環境記錄器。
-        * 在函數環境中，環境記錄器是聲明式環境記錄器。
-        * 注意 — 對於函數環境，聲明式環境記錄器還包含了一個傳遞給函數的 arguments 對象（此對象存儲索引和參數的映射）和傳遞給函數的參數的 length。 
+        * 在全局環境`Golbal Execution Context`中，環境記錄器 `Environment Record` 是 **對象環境記錄器 `Object environment record`**。
+        * 在函數環境`Functional Execution Context`中，環境記錄器 `Environment Record` 是 **聲明式環境記錄器 `Declarative environment record`**。
+        * 注意 — 對於函數環境 `Functional Execution Context`， 聲明式環境記錄器還包含了一個傳遞給函數的 arguments 對象（此對象存儲索引和參數的映射）和傳遞給函數的參數的 length。 
 
-   **lexical environment looks like this in pseudocode**
+   **`lexical environment` in `ExectionContext`**
 
       ``` javascript
       GlobalExectionContext = {
@@ -159,10 +161,17 @@
           }
           outer: <null>,
           this: <global object>
+        },
+         VariableEnvironment: {
+          EnvironmentRecord: {
+            Type: "Object",
+            var: undefined,
+          }
+          outer: <null>
         }
       }
       ```
-      
+
       ``` javascript
       FunctionExectionContext = {
         LexicalEnvironment: {
@@ -172,6 +181,13 @@
           }
           outer: <Global or outer function environment reference>,
           this: <depends on how function is called>
+        },
+        VariableEnvironment: {
+          EnvironmentRecord: {
+            Type: "Declarative",
+            var: undefined
+          },
+          outer: <GlobalLexicalEnvironment>
         }
       }
       ```
@@ -180,6 +196,20 @@
      * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
      * [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
 
-      **[Back to Top](#table-of-contents)**
+      **[🔝 Back to Top](#table-of-contents)**
+
+3. ### Hoisting 提升
+
+   > 關鍵字: Hoisting 提升
+
+   **Hoisting**  提升:
+      在建立階段預先將變數分配記憶體空間並預設賦值為 undefined 。
+    
+   * reference
+     * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
+     * [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
+
+      **[🔝 Back to Top](#table-of-contents)**
+
 
 

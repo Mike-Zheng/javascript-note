@@ -1,5 +1,6 @@
 hoisting
-
+「暫時性死區」（TDZ
+let const
 
 how javaScript runs
 
