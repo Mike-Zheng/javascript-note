@@ -112,7 +112,7 @@
       * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
       * [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
 
-      **[🔝 Back to Top](#table-of-contents)**
+    **[🔝 Back to Top](#table-of-contents)**
 
 
 
@@ -200,7 +200,8 @@
       * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
       * [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
       * [重学js —— Lexical Environments（词法环境）和 Environment Records（环境记录）](https://github.com/lizhongzhen11/lizz-blog/issues/49)
-      **[🔝 Back to Top](#table-of-contents)**
+
+    **[🔝 Back to Top](#table-of-contents)**
 
 3. ### Hoisting 提升
 
@@ -286,7 +287,7 @@
     **reference**
       * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
       * [[教學] JavaScript 中的 Hoisting 是什麼意思？let const var 的差異居然是這個？](https://shubo.io/javascript-hoisting/)
-      
-      **[🔝 Back to Top](#table-of-contents)**
+
+    **[🔝 Back to Top](#table-of-contents)**
 
 
