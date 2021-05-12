@@ -233,56 +233,56 @@
 
     **Hoisting in closure**
 
-      Case: 利用一個 for 迴圈每隔一秒印出一個數字:
+      * Case: 利用一個 for 迴圈每隔一秒印出一個數字:
 
-      ``` javascript
-      for (var i = 0; i < 3; i++) {
-        setTimeout(() => {
-          console.log(i);
-        }, i * 1000);
-      }
-      ```
-
-      這是錯誤寫法，因為根據 hoisting 的原則，i 會是一個 global 變數。
-
-      其變數 i 為同一個environment record 的紀錄，因此for 會更改其值，上面的程式碼等同於:
-
-      ``` javascript
-      var i;
-      for (i = 0; i < 3; i++) {
-        setTimeout(() => {
-          console.log(i);
-        }, i * 1000)
-      }
-      ```
-
-      這個問題可以這樣做
-
-      **方法1** 使用 `IIFE` 
-
-      捕捉環境的變數建立新的`Functional Execution Context`
-
-      ``` javascript
-      for (var i = 0; i < 3; i++) {
-        (function (j) {
+        ``` javascript
+        for (var i = 0; i < 3; i++) {
           setTimeout(() => {
-            console.log(j);
-          }, j * 1000);
-        })(i);
-      }
-      ```
+            console.log(i);
+          }, i * 1000);
+        }
+        ```
 
-      使用一個  `IIFE` ，它接受一個變數 j 當作參數，緊接著我們立刻將 i 傳進去當作參數呼叫它。每一次  `IIFE`  都產生了一個區域變數 j，值分別是 0, 1, 2。
+        這是錯誤寫法，因為根據 hoisting 的原則，i 會是一個 global 變數。
 
-      **方法2** 使用ES6 `let`/ `const`
+        其變數 i 為同一個environment record 的紀錄，因此for 會更改其值，上面的程式碼等同於:
 
-      ``` javascript
-      for (let i = 0; i < 3; i++) {
-        setTimeout(() => {
-          console.log(i);
-        }, i * 1000)
-      }
-      ```
+        ``` javascript
+        var i;
+        for (i = 0; i < 3; i++) {
+          setTimeout(() => {
+            console.log(i);
+          }, i * 1000)
+        }
+        ```
+
+        * 這個問題可以這樣做
+
+          **方法1** 使用 `IIFE` 
+
+          捕捉環境的變數建立新的`Functional Execution Context`
+
+          ``` javascript
+          for (var i = 0; i < 3; i++) {
+            (function (j) {
+              setTimeout(() => {
+                console.log(j);
+              }, j * 1000);
+            })(i);
+          }
+          ```
+
+          使用一個  `IIFE` ，它接受一個變數 j 當作參數，緊接著我們立刻將 i 傳進去當作參數呼叫它。每一次  `IIFE`  都產生了一個區域變數 j，值分別是 0, 1, 2。
+
+          **方法2** 使用ES6 `let`/ `const`
+
+          ``` javascript
+          for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+              console.log(i);
+            }, i * 1000)
+          }
+          ```
 
     **reference**
       * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
