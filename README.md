@@ -195,6 +195,7 @@
    * reference
      * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
      * [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
+     * [重学js —— Lexical Environments（词法环境）和 Environment Records（环境记录）](https://github.com/lizhongzhen11/lizz-blog/issues/49)
 
       **[🔝 Back to Top](#table-of-contents)**
 
@@ -202,12 +203,84 @@
 
    > 關鍵字: Hoisting 提升
 
-   **Hoisting**  提升:
-      在建立階段預先將變數分配記憶體空間並預設賦值為 undefined 。
-    
+   **Hoisting**  提升
+
+      基本概念:
+      * 在`Execution Context` 建立階段預先將其內部`variables` 與 `functions`分配記憶體空間。
+      * `variables`預設賦值為 undefined 。
+      
+      ``` javascript
+      console.log(a); //undefined
+      var a = 'Hello World!';
+      ```
+
+      以上程式碼 a 會被提升 `Hoisting`
+      因此會執行的結果會同
+
+      ``` javascript
+      var a; //undefined
+      console.log(a); 
+      a = 'Hello World!';
+      ```
+   **TDZ**  暫時死區 (Temporal Dead Zone)
+      概念:
+      * ES6之後加入的 `let`/ `const`，避免宣告前使用該變數，`hoisting` 之後暫時存放的位置，以利後續的警告。
+      * 如果在宣告`let`/ `const`之前使用變數，存在「暫時死區」無法存取，使用它就會報錯 `ReferenceError`。
+
+   **Hoisting in closure**
+
+      Case: 利用一個 for 迴圈每隔一秒印出一個數字：
+
+      ``` javascript
+      for (var i = 0; i < 3; i++) {
+        setTimeout(() => {
+          console.log(i);
+        }, i * 1000);
+      }
+      ```
+
+      這是錯誤寫法，因為根據 hoisting 的原則，i 會是一個 global 變數。
+
+      其變數 i 為同一個environment record 的紀錄，因此for 會更改其值，上面的程式碼等同於：
+
+      ``` javascript
+      var i;
+      for (i = 0; i < 3; i++) {
+        setTimeout(() => {
+          console.log(i);
+        }, i * 1000)
+      }
+      ```
+
+      這個問題可以這樣做
+
+      * **方法1** 使用IIFE
+        捕捉環境的變數建立新的`Functional Execution Context`
+        ``` javascript
+        for (var i = 0; i < 3; i++) {
+          (function (j) {
+            setTimeout(() => {
+              console.log(j);
+            }, j * 1000);
+          })(i);
+        }
+        ```
+
+        使用一個 IIFE，它接受一個變數 j 當作參數，緊接著我們立刻將 i 傳進去當作參數呼叫它。每一次 IIFE 都產生了一個區域變數 j，值分別是 0, 1, 2。
+
+      * **方法2** 使用ES6 let 和 const
+
+        ``` javascript
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            console.log(i);
+          }, i * 1000)
+        }
+        ```
+        
    * reference
      * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
-     * [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
+     * [[教學] JavaScript 中的 Hoisting 是什麼意思？let const var 的差異居然是這個？](https://shubo.io/javascript-hoisting/)
 
       **[🔝 Back to Top](#table-of-contents)**
 

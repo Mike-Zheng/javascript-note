@@ -2,6 +2,54 @@ hoisting
 「暫時性死區」（TDZ
 let const
 
+
+scope chain 
+outer environment
+``` javascript
+function b() {
+    console.log(myVar);
+}
+
+
+function a() {
+    var myVar = 2;
+    console.log(myVar);
+    
+	b();
+}
+
+var myVar = 1;
+a();
+```
+
+
+
+
+
+closure
+let 與 var
+
+``` javascript
+function a() {
+
+    function b() {
+        console.log(myVar);
+    }
+    	b();
+
+    var myVar = 2;
+    console.log(myVar);
+    
+	b();
+
+    myVar = 3;
+    b();
+}
+
+var myVar = 1;
+a();
+```
+
 how javaScript runs
 
 https://medium.com/jspoint/how-javascript-works-in-browser-and-node-ab7d0d09ac2f
