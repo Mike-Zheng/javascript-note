@@ -291,3 +291,81 @@
     **[🔝 Back to Top](#table-of-contents)**
 
 
+
+4. ### this 
+
+    > 關鍵字: this
+
+    **this**  
+
+    基本概念:
+      * this 就是一個指針，指向我們invoke function的對象。
+      * this的指向的是目前呼叫function或方法的擁有者(owner)物件，也就是說它與function如何被呼叫或調用有關，雖然是同一function的呼叫，因為不同的物件呼叫，也有可能是不同的this值。
+      * this 的值跟`scope`作用域跟程式碼的位置在哪裡完全無關，只跟**你如何呼叫**有關
+
+    ``` javascript
+    var obj={
+      func1:function(){
+        console.log(this)
+      }
+    }
+
+    function func2(){
+      console.log(this)
+    }
+
+    obj.func1(); 
+    func2();
+    ```
+    在 JavaScript 中我們都是從左讀到右，解釋一下範例中的this
+
+    - 執行obj.func1()時的 this 指向 obj 
+
+    - 執行func2()時的 this 指向 window 
+
+
+    **arrow function** 箭頭函式
+
+    ``` javascript
+    var obj2 = {
+      func: () => { console.log(this) }
+    }
+    obj2.func(); // window 
+    // 非嚴格模式下
+    ```
+
+    箭頭函數按`Lexical Environment`詞法環境，來綁定它的環境，所以 this 實際上會引用到原來的環境。
+
+    Lexical Environment 詞法環境:在你在寫code的地方將變量決定變數的值
+
+    也就是說，當我們invoke此時obj2.func()時，該箭頭函數其實在定義好obj2對象時就確定了它的Lexical Environment 詞法環境。
+
+        **123**
+    * call(呼叫): 以個別提供的this值與傳入參數值來呼叫function。
+    * bind(綁定): 建立一個新的function，這個新function在呼叫時，會以提供的this值與一連串的傳入參數值來進行呼叫。
+    * apply(應用): 與call方法功能一樣，只是除了this值傳入外，另一個傳入參數值使用陣列。
+
+https://github.com/xitu/gold-miner/blob/master/TODO1/mastering-javascript-this-keyword-detailed-guide.md
+
+    **reference**
+    
+      * [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
+      * [[教學] JavaScript 中的 Hoisting 是什麼意思？let const var 的差異居然是這個？](https://shubo.io/javascript-hoisting/)
+
+    **[🔝 Back to Top](#table-of-contents)**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
