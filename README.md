@@ -1,7 +1,10 @@
-# JavaScript Note
+# JavaScript Note 麥可筆記
 
-> 深度理解javascript運作原理
+> 整理並重新理解javascript運作原理
 
+
+## 前言
+靠js吃飯多年，每次開發都會有發現不知或不足的地方，於是開一個筆記紀錄每次的資訊。
 
 
 ---
@@ -36,7 +39,7 @@
       * `Execution Stack` 為 `Execution Context` 執行順序的stack，會將建立階段的 `Execution Context` 依順序push & pop ，其順序為FILO(First In, Last Out)。
       * 當引擎執行你的javascript code時，會先建立一個 `Gobal Execution Context` 並且把他push進 `Execution Stack`。
       * 而當執行到function時，會建立 `Functional Execution Context` ，如果有很多function，就會一層疊一層的方式push進去。
-      * 每次從 `Execution Stack` 最上方 pop一個 `Execution Context` 並執行稱之為 `call stack` 。
+      * call stack: 每次從 `Execution Stack` 最上方 pop一個 `Execution Context` 並執行稱之為 `call stack` 。
 
       以下範例解釋 Execution Stack流程
       
@@ -54,9 +57,16 @@
       console.log('Inside Global Execution Context');
       ```
 
-
       ![execution_context_stack.png](./images/execution_context_stack.png)
       > An Execution Context Stack for the above code.
+
+
+      ```
+      Inside first function
+      Inside second function
+      Again inside first function
+      Inside Global Execution Context
+      ```
 
 
       * 上面JavaScript code在瀏覽器中執行(invoke)時，JavaScript 引擎會先創建一個 `Gobal Execution Context` 並把它push進 `Execution Stack` 中。碰到 first() 執行時，引擎給這個函數創建一個新的 `Execution Context` ，然後把它push進 `Execution Stack` 的頂部。
@@ -124,7 +134,7 @@
 
       * `Lexical Environment` : 在code中真實存在的位置以及周圍的內容。 在JavaScript中它的位置及順序。
       
-      * function內的 `{...}` 即為一個 `scope`，`Lexical Environment`會依照其內外環境創造內容，並存入`Execution Context`之中。
+      * 基本上來說，function內的 `{...}` 即為一個 `scope`，`Lexical Environment`會依照其內外環境創造內容，並存入`Execution Context`之中。
 
         ``` javascript
         function helloWorld(){
@@ -340,12 +350,13 @@
 
     也就是說，當我們invoke此時obj2.func()時，該箭頭函數其實在定義好obj2對象時就確定了它的Lexical Environment 詞法環境。
 
-        **123**
+
+
     * call(呼叫): 以個別提供的this值與傳入參數值來呼叫function。
     * bind(綁定): 建立一個新的function，這個新function在呼叫時，會以提供的this值與一連串的傳入參數值來進行呼叫。
     * apply(應用): 與call方法功能一樣，只是除了this值傳入外，另一個傳入參數值使用陣列。
 
-https://github.com/xitu/gold-miner/blob/master/TODO1/mastering-javascript-this-keyword-detailed-guide.md
+    https://github.com/xitu/gold-miner/blob/master/TODO1/mastering-javascript-this-keyword-detailed-guide.md
 
     **reference**
     
