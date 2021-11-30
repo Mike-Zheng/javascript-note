@@ -378,5 +378,31 @@
 
 
 
+https://angela52799.medium.com/%E7%84%A1%E6%B3%95%E7%90%86%E8%A7%A3%E7%9A%84-js-%E9%96%89%E5%8C%85%E5%8E%9F%E7%90%86-645fde1076fc
+
+closure
+
+外層函數執行完消逝，但內部函數卻依然保留了已消逝的外部環境變量
+使得在執行內部函數時，完整記錄了他的值
 
 
+
+
+詞法作用域
+function start() {
+ alert(args); // 真正執行的作用域
+}
+function server() {
+ var args = “parameter here.”;
+ start(); // 這裡只是調用點
+}
+server(); // ReferenceError: args is not defined
+動態作用域
+function start() {
+ alert(args); 
+}
+function server() {
+ var args = “parameter here.”;
+ start(); // 在呼叫函數時決定可訪問的變數
+}
+server(); // parameter here.
