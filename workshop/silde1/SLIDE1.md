@@ -16,6 +16,7 @@ slideOptions:        # 簡報相關的設定
 
 
 
+note: 前端技術與v3版本的差異
 
 ---
 
@@ -30,16 +31,33 @@ slideOptions:        # 簡報相關的設定
 
 #### 為什麼我們使用vue
 
-![](https://i.imgur.com/Vrqy9Pa.png)
+
+
+
+![](https://i.imgur.com/OHwbRhb.png)
+
 
 
 
 Note:
-  vue大概是我2017年引進公司，15 16年我主要的工作項目其實都是使用angularJS，當初會引入vue的原因不外乎是前端工程化與legcy code的相容程度，當然還有一部分是因為他跟angular的pattern相似。
-	基本上來說作為必須持續維護legcy code的系統，dc cmtweb ea等等，react的引進只會讓自己跳坑，沒有辦法partial update，要改的太多了只好改天了。
+  2017年引進公司	15 16 工作項目angularJS
+	當初會引入vue的原因
+	1.不外乎是前端工程化
+	2.與legcy code的相容程度
+	3.私心 angular的pattern相似
+	---
+	持續維護legcy code的系統
+	dc cmtweb ea等等，
+	react的引進只會讓自己跳坑，沒有辦法partial update，要改的太多了只好改天了。
 	而當時的vue跟jquery借鏡的就是cdn也能跑這個優勢，讓傳統code都可以局部慢慢的升級，而我們第一個使用上的就是opcua nodetree的前端化。
 
 ---
+
+
+#### React 佔有率比較高? 
+
+---
+
 
 ##### vue 和 react的活耀度
 
@@ -278,9 +296,10 @@ SFC : .vue 結尾的文件
 - `script` -> JS 
 - `style` -> CSS 
 
-Composition API: vue2 結構
 
-Options API: vue3 新結構
+Options API: vue2 結構
+
+Composition API: vue3 新結構
 
 
 note: 
