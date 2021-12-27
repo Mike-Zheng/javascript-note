@@ -4,8 +4,7 @@ tags: presentation   # 簡報的標籤
 slideOptions:        # 簡報相關的設定
   theme: Vim   # 顏色主題
   transition: 'fade' # 換頁動畫
-	allottedMinutes: 5  # 預計一張簡報花幾分鐘
-	parallaxBackgroundImage: https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg
+  allottedMinutes: 5  # 預計一張簡報花幾分鐘
 ---
 
 # vue3 初上
