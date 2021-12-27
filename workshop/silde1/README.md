@@ -116,12 +116,13 @@ export default function Counter() {
 
 
 reference 
--  [How to Build To-do App with Vue 3 Typescript](https://www.bacancytechnology.com/blog/vue3-typescript)
--  [Vue3+script setup+ts+Vite+Volar搭建项目](http://www.codebaoku.com/it-js/it-js-220462.html)
+- [How to Build To-do App with Vue 3 Typescript](https://www.bacancytechnology.com/blog/vue3-typescript)
+- [Vue3+script setup+ts+Vite+Volar搭建项目](http://www.codebaoku.com/it-js/it-js-220462.html)
 
--  [【前端新手日記】Vue.js學習筆記(6)-Vue2的Option API和Vue3的Composition API](https://pinkymini.pixnet.net/blog/post/35630359-%E3%80%90%E5%89%8D%E7%AB%AF%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%91vue.js%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%286%29-vue2%E7%9A%84option-)
+- [【前端新手日記】Vue.js學習筆記(6)-Vue2的Option API和Vue3的Composition API](https://pinkymini.pixnet.net/blog/post/35630359-%E3%80%90%E5%89%8D%E7%AB%AF%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%91vue.js%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%286%29-vue2%E7%9A%84option-)
 
--  [为什么我感觉 Vue 3 TypeScript 还是不行？](https://www.zhihu.com/question/453332049/answer/1844784032)
--  [尤大都说Vue3 + script setup + TS + Volar真香，你说香不香？](https://blog.csdn.net/liuyan19891230/article/details/119745517)
--  [探索 Vue 3 中的 JSX](https://zhuanlan.zhihu.com/p/420440053)
--  [Vue3 究竟好在哪里？（和 React Hook 的详细对比）](https://zhuanlan.zhihu.com/p/133819602)
+- [为什么我感觉 Vue 3 TypeScript 还是不行？](https://www.zhihu.com/question/453332049/answer/1844784032)
+- [尤大都说Vue3 + script setup + TS + Volar真香，你说香不香？](https://blog.csdn.net/liuyan19891230/article/details/119745517)
+- [探索 Vue 3 中的 JSX](https://zhuanlan.zhihu.com/p/420440053)
+- [Vue3 究竟好在哪里？（和 React Hook 的详细对比）](https://zhuanlan.zhihu.com/p/133819602)
+- [008 天絕對看不完的 Vue.js 3.0 指南](https://book.vue.tw/)
