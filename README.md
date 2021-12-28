@@ -30,7 +30,8 @@
 
       `Execution Context` 就是執行javascript code時候的環境，用於跟javascript code的運算時求值等，任何javascript code執行的時候都是處於一個 `Execution Context` 之中。
 
-      `Execution Stack` 掌管了 `Execution Context` 創建後的執行順序。當javascript code值型會將創建後的`Execution Stack` 層層疊入，並順著作用域鏈 `scope chain` 訪問變量、如果內部有函數invoke就創建一個新的 `Execution Context` ，把原先的push下去並把控制權交出。
+      `Execution Stack` 負責 `Execution Context` 創建後的執行順序。當javascript code運行會將創建後的`Execution Stack` 層層疊入，並順著作用域鏈 `scope chain` 訪問變量、如果內部有invoke其他函數就創建一個新的 `Execution Context` ，push在原先的之上並把控制權交出。
+
 
       ![execution_context.png](./images/execution_context.png)
 
@@ -249,7 +250,7 @@
         for (var i = 0; i < 3; i++) {
           setTimeout(() => {
             console.log(i);
-          }, i * 1000);
+          }, 1000);
         }
         ```
 
@@ -262,7 +263,7 @@
         for (i = 0; i < 3; i++) {
           setTimeout(() => {
             console.log(i);
-          }, i * 1000)
+          }, 1000)
         }
         ```
 
@@ -346,7 +347,7 @@
 
     箭頭函數按`Lexical Environment`詞法環境，來綁定它的環境，所以 this 實際上會引用到原來的環境。
 
-    Lexical Environment 詞法環境:在你在寫code的地方將變量決定變數的值
+    Note: Lexical Environment 詞法環境:在你在寫code的地方將變量決定變數的值
 
     也就是說，當我們invoke此時obj2.func()時，該箭頭函數其實在定義好obj2對象時就確定了它的Lexical Environment 詞法環境。
 
