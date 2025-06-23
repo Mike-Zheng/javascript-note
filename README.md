@@ -2,6 +2,9 @@
 
 > 整理並重新理解 javascript 運作原理
 
+
+[筆記之後改使用isuue來記錄](https://github.com/Mike-Zheng/javascript-note/issues)
+
 ## 前言
 
 靠 js 吃飯多年，每次開發都會有發現不知或不足的地方，於是開一個筆記紀錄每次的資訊。
