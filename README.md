@@ -1,9 +1,8 @@
 # JavaScript Note 麥可筆記
 
-> 整理並重新理解 javascript 運作原理
+> 使用 AI 整理並重新理解 javascript 運作原理
 
-
-[筆記之後改使用isuue來記錄](https://github.com/Mike-Zheng/javascript-note/issues)
+[筆記之後改使用 isuue 來記錄](https://github.com/Mike-Zheng/javascript-note/issues)
 
 ## 前言
 
@@ -13,395 +12,617 @@
 
 ### Table of Contents
 
-| No. | Content                                                       |
-| --- | ------------------------------------------------------------- |
-| 1   | [Execution Context 執行環境](#execution-context-執行環境)     |
-| 2   | [Lexical Environment 詞法環境](#lexical-environment-詞法環境) |
-| 3   | [Hoisting 提升](#hoisting-提升)                               |
+| No. | Content                                                                |
+| --- | ---------------------------------------------------------------------- |
+| 1   | [Execution Context 執行環境](#1-execution-context-執行環境)            |
+| 2   | [Lexical Environment 詞法環境](#2-lexical-environment-詞法環境)        |
+| 3   | [Hoisting 提升](#3-hoisting-提升)                                      |
+| 4   | [Scope 作用域](#4-scope-作用域)                                        |
+| 5   | [Global Scope 全域作用域](#5-global-scope-全域作用域)                  |
+| 6   | [Function Scope 函數作用域](#6-function-scope-函數作用域)              |
+| 7   | [Block Scope 塊作用域](#7-block-scope-塊作用域)                        |
+| 8   | [Variable Declaration 變數宣告](#8-variable-declaration-變數宣告)      |
+| 9   | [var, let, const 的區別](#9-var-let-const-的區別)                      |
+| 10  | [Temporal Dead Zone 暫時性死區](#10-temporal-dead-zone-暫時性死區)     |
+| 11  | [Closure 閉包](#11-closure-閉包)                                       |
+| 12  | [Garbage Collection 垃圾回收機制](#12-garbage-collection-垃圾回收機制) |
+| 13  | [Memory Management 記憶體管理](#13-memory-management-記憶體管理)       |
+| 14  | [Call Stack 呼叫堆疊](#14-call-stack-呼叫堆疊)                         |
+| 15  | [Event Loop 事件迴圈](#15-event-loop-事件迴圈)                         |
+| 16  | [Callback Queue 回調隊列](#16-callback-queue-回調隊列)                 |
+| 17  | [Microtask Queue 微任務隊列](#17-microtask-queue-微任務隊列)           |
+| 18  | [Promises Promise 機制](#18-promises-promise-機制)                     |
+| 19  | [Async/Await](#19-asyncawait)                                          |
+| 20  | [JavaScript 引擎 如 V8 的架構](#20-javascript-引擎-如-v8-的架構)       |
 
 ---
 
-1. ### Execution Context 執行環境
+### 1. Execution Context 執行環境
 
-   > 關鍵字: Execution Context 執行環境 執行上下文
+#### **什麼是 Execution Context？**
 
-   **什麼是 Execution Context**
+Execution Context（執行環境）是 JavaScript 中程式碼執行的最小單位。每當 JavaScript 引擎執行程式碼時，會創建對應的執行環境，用來管理變數、函數以及作用域。
 
-   `Execution Context` 就是執行 javascript code 時候的環境，用於跟 javascript code 的運算時求值等，任何 javascript code 執行的時候都是處於一個 `Execution Context` 之中。
+**功能：**
 
-   `Execution Stack` 負責 `Execution Context` 創建後的執行順序。當 javascript code 運行會將創建後的`Execution Stack` 層層疊入，並順著作用域鏈 `scope chain` 訪問變量、如果內部有 invoke 其他函數就創建一個新的 `Execution Context` ，push 在原先的之上並把控制權交出。
+1. **定義程式碼的執行範圍**：執行環境決定了哪些變數和函數在當前程式碼中是可訪問的。
+2. **監控程式執行狀態**：執行環境包含執行程式碼時的相關資訊（例如變數值、函數狀態等）。
 
-   ![execution_context.png](./images/execution_context.png)
+---
 
-   **Execution Stack**
+#### **執行環境的種類**
 
-   - `Execution Stack` 為 `Execution Context` 執行順序的 stack，會將建立階段的 `Execution Context` 依順序 push & pop ，其順序為 FILO(First In, Last Out)。
-   - 當引擎執行你的 javascript code 時，會先建立一個 `Gobal Execution Context` 並且把他 push 進 `Execution Stack`。
-   - 而當執行到 function 時，會建立 `Functional Execution Context` ，如果有很多 function，就會一層疊一層的方式 push 進去。
-   - call stack: 每次從 `Execution Stack` 最上方 pop 一個 `Execution Context` 並執行稱之為 `call stack` 。
+JavaScript 中的執行環境分為以下三種類型：
 
-   以下範例解釋 Execution Stack 流程
+1. **全域執行環境 (Global Execution Context)**
 
-   ```javascript
-   let a = "Hello World!";
-   function first() {
-     console.log("Inside first function");
-     second();
-     console.log("Again inside first function");
-   }
-   function second() {
-     console.log("Inside second function");
-   }
-   first();
-   console.log("Inside Global Execution Context");
-   ```
+   - 預設的執行環境，當 JavaScript 程式啟動時自動創建。
+   - 全域變數和函數都屬於此環境。
+   - 在瀏覽器中，`this` 指向 `window`；在 Node.js 中，`this` 指向 `global`。
 
-   ![execution_context_stack.png](./images/execution_context_stack.png)
-
-   > An Execution Context Stack for the above code.
-
-   ```bash
-   Inside first function
-   Inside second function
-   Again inside first function
-   Inside Global Execution Context
-   ```
-
-   - 上面 JavaScript code 在瀏覽器中執行(invoke)時，JavaScript 引擎會先創建一個 `Gobal Execution Context` 並把它 push 進 `Execution Stack` 中。碰到 first() 執行時，引擎給這個函數創建一個新的 `Execution Context` ，然後把它 push 進 `Execution Stack` 的頂部。
-
-   - 當 second() 在 first() 函數內部執行時，引擎會給 second 創建 `Execution Context` 並把它 push 進 `Execution Stack` 頂部，當 second 函數執行完畢，它的 `Execution Context` 就會從 `Execution Stack` 最上方 pop，指針會指向它下面的 `Execution Context` ，也就是 first 函數的 `Execution Context`。
-
-   - 當 first 函數執行完畢其 `Execution Context` 也會從最上方 pop，指針就指向了 `Gobal Execution Context` 。當所有的代碼執行完畢，引擎會把 `Gobal Execution Context` 也從 `Execution Stack` 中移出。
-
-   **Execution Context 的種類**
-
-   Execution Context 一共有三種:
-
-   1. Gobal Execution Context:
-
-   - 預設或是基本的 `Execution Context`。
-   - 在一個程序(program)中只會有一個 `Gobal Execution Context`。
-   - 建立
-     - `global object` (在瀏覽器是 `window` )。
-     - `this`，並把 `this` 指向 `global object` 。
-
-   2. Functional Execution Context:
-
-   - 執行 function 的時候，會創立一個新的 `Functional Execution Context` ，每一個 function 執行都會有自己的 `Execution Context` 。
-   - 相同的 function code 在不同的執行階段會建立各自的 `Execution Context`。
-
-   3. Eval:
-
-   - 在 eval 函數中執行的 javascript code 也會有自己的 `Execution Context` ，但由於 eval 因為安全因素已經不常使用。
-
-   **Execution Context 階段**
-
-   `Execution Context`有兩個階段:
-
-   1. 建立階段 `The Creation Phase`
-   2. 執行階段 `The Execution Phase`
-
-   - 建立階段 `The Creation Phase`
-
-     `Execution Context`的創建階段，發生在 function invoke 時且在執行函數內的 code 之前，在創建階段 js 引擎會做如下操作:
-
-     - 創建 詞法環境( `Lexical Environment` ) 與 變量環境( `Variable Environment` )並 `Hoisting`
-       - `Hoisting` : 在建立階段預先將變數分配記憶體空間並預設賦值為 undefined
-     - 建立`this`，建立全域物件 `global object`
-       - binding `this` ，而 `global object` 只有在 ` Gobal Execution Context` 的時候才會建立。
-     - 建立 `scope chain` 與外部環境 `Outer Environment`
-       - 對於 `Gobal Execution Context` 而言，其 `Outer Environment` 為 null，對於 `Functional Execution Context` 而言，如果 function b 包在 function a 裡面，那 function b 的外部環境就是 function a
-
-   - 執行階段 `The Execution Phase`
-
-     在此階段 invoke JavaScript 並 pop 出 `Execution Stack`。
-
-   **reference**
-
-   - [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
-   - [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
-
-   **[🔝 Back to Top](#table-of-contents)**
-
-2. ### Lexical Environment 詞法環境
-
-   > 關鍵字: Lexical Environment 詞法環境
-
-   **Lexical Environment** 詞法環境:
-
-   - `Lexical Environment` : 在 code 中真實存在的位置以及周圍的內容。 在 JavaScript 中它的位置及順序。
-
-   - 基本上來說，function 內的 `{...}` 即為一個 `scope`，`Lexical Environment`會依照其內外環境創造內容，並存入`Execution Context`之中。
-
-     ```javascript
-     function helloWorld() {
-       let text = "hello world!";
-     }
-     ```
-
-   - 每當 function 被呼叫前的創立階段時，都會產生一組新的語彙環境 (`Lexical Environment`)，因此 function 的作用域與其相關環境變數在 **`Execution Context` 創立的時候** 就已經決定。
-   - 當 `Execution Stack` 執行到此 function 的 `Execution Context`時，也就是 invoke 此 function 時，會依照**已建立**的`Lexical Environment` 環境執行其內容。
-
-   **Variable Environment** 變量環境:
-
-   - 在 `ES6` 前，宣告變數都是通過 var 關鍵詞宣告的，在 `ES6` 中則提倡使用 `let` 和 `const` 來聲明變量，為了兼容 var 的寫法，於是使用 `Variable Environment` 變量環境來存儲 var 聲明的變量。
-   - 為特化的`Lexical Environment`，其內只存變數`var`。
-
-   **Lexical Environment** 的組成
-
-   - `Environment Record` 環境記錄器:
-     - `Environment Record`為存放 變數 與 function 宣告 的地方
-     - `Environment Record` 分為兩種:
-       - `Declarative environment record` **聲明式環境記錄器** 存儲變數、函數和參數。
-       - `Object environment record` **對象環境記錄器** 用來定義出現在`Execution Context`中的變量和函數的關係。
-   - `this`
-   - `scope chain` (outer)
-
-   **note**
-
-   - 在全局環境`Golbal Execution Context`中，環境記錄器 `Environment Record` 是 **對象環境記錄器 `Object environment record`**。
-   - 在函數環境`Functional Execution Context`中，環境記錄器 `Environment Record` 是 **聲明式環境記錄器 `Declarative environment record`**。
-   - 對於函數環境 `Functional Execution Context`， 聲明式環境記錄器還包含了一個傳遞給函數的 arguments 對象和傳遞給函數的參數的 length。
-
-   **`Lexical Environment` in `Execution Context`**
+   **範例：**
 
    ```javascript
-   GlobalExecutionContext = {
-     LexicalEnvironment: {
-       EnvironmentRecord: {
-         Type: "Object",
-         // Identifier bindings go here
-       }
-       outer: <null>,
-       this: <global object>
-     },
-      VariableEnvironment: {
-       EnvironmentRecord: {
-         Type: "Object",
-         var: undefined,
-       }
-       outer: <null>
-     }
+   var x = 10;
+   console.log(x); // 全域執行環境
+   ```
+
+2. **函數執行環境 (Function Execution Context)**
+
+   - 每當一個函數被呼叫時，會創建一個新的函數執行環境。
+   - 每個函數執行環境都有自己的作用域，內部的變數無法從外部直接訪問。
+
+   **範例：**
+
+   ```javascript
+   function sum(a, b) {
+     return a + b; // 函數執行環境
    }
    ```
 
+3. **Eval 執行環境 (Eval Execution Context)**
+
+   - 當執行 `eval()` 時，會創建一個特殊的執行環境。
+   - 使用 `eval()` 創建的變數會屬於當前執行環境。
+
+   **範例：**
+
    ```javascript
-   FunctionExecutionContext = {
-     LexicalEnvironment: {
-       EnvironmentRecord: {
-         Type: "Declarative",
-         // Identifier bindings go here
-       }
-       outer: <Global or outer function environment reference>,
-       this: <depends on how function is called>
-     },
-     VariableEnvironment: {
-       EnvironmentRecord: {
-         Type: "Declarative",
-         var: undefined
-       },
-       outer: <GlobalLexicalEnvironment>
-     }
+   eval("var a = 10; console.log(a);"); // eval 執行環境
+   ```
+
+---
+
+#### **執行環境的結構**
+
+執行環境由以下三個主要部分組成：
+
+1. **變數環境 (Variable Environment)**
+
+   - 儲存變數和函數的宣告。
+   - 包含：
+     - **變數宣告（Variable Declarations）**
+     - **函數宣告（Function Declarations）**
+     - **函數參數（Function Parameters）**
+
+2. **詞法環境 (Lexical Environment)**
+
+   - 描述當前程式碼的作用域鏈（Scope Chain），用於解析變數和函數。
+   - 詞法環境包括：
+     - **當前執行代碼塊的變數**
+     - **父執行環境的引用（Outer Environment Reference）**
+
+3. **`this` 綁定 (This Binding)**
+   - `this` 的值取決於執行環境的上下文：
+     - 在全域環境中，`this` 通常指向 `window`（瀏覽器）或 `global`（Node.js）。
+     - 在函數執行環境中，`this` 的值根據函數的呼叫方式動態決定。
+
+---
+
+#### **執行環境的運作機制**
+
+執行環境在 JavaScript 程式執行過程中會經歷以下階段：
+
+1. **創建階段 (Creation Phase)**
+
+   - 執行程式碼之前，JavaScript 引擎會創建執行環境。
+   - 此階段會完成：
+     - **建立詞法環境（Lexical Environment）**
+     - **建立變數環境（Variable Environment）**
+     - **綁定 `this` 值**
+
+2. **執行階段 (Execution Phase)**
+   - JavaScript 執行程式碼，並基於執行環境中的資訊處理變數和函數。
+
+---
+
+#### **執行環境與作用域鏈 (Scope Chain) 的關係**
+
+執行環境中的 **詞法環境 (Lexical Environment)** 決定了作用域鏈。作用域鏈的主要功能是幫助 JavaScript 引擎解析變數。
+
+- **作用域鏈的構成：**
+
+  1. 當前執行環境的變數
+  2. 父執行環境的變數
+  3. 全域執行環境的變數
+
+- **範例：**
+
+  ```javascript
+  function outer() {
+    let a = 10;
+
+    function inner() {
+      console.log(a); // 從父作用域獲取 a
+    }
+
+    inner();
+  }
+
+  outer();
+  ```
+
+- 當 JavaScript 引擎查找變數時，會沿著作用域鏈進行查找，直到找到對應的變數或報錯為止。
+
+---
+
+#### **執行環境與 Hoisting (提升)**
+
+**Hoisting（提升）** 是 JavaScript 的一個重要特性，指的是變數和函數的宣告會在執行程式碼之前被提升到執行環境的頂部。
+
+- **變數提升：**
+
+  ```javascript
+  console.log(a); // undefined
+  var a = 10;
+  ```
+
+  等價於：
+
+  ```javascript
+  var a;
+  console.log(a); // undefined
+  a = 10;
+  ```
+
+- **函數提升：**
+
+  ```javascript
+  greet(); // "Hello"
+  function greet() {
+    console.log("Hello");
+  }
+  ```
+
+---
+
+#### **Call Stack（呼叫堆疊）與執行環境**
+
+JavaScript 使用 **Call Stack（呼叫堆疊）** 管理執行環境。每個執行環境會被推入堆疊（Push），當執行完成後會從堆疊中彈出（Pop）。
+
+- **範例：**
+
+  ```javascript
+  function a() {
+    b();
+    console.log("In function a");
+  }
+
+  function b() {
+    console.log("In function b");
+  }
+
+  a();
+  ```
+
+  **執行過程：**
+
+  1. 全域執行環境被推入堆疊。
+  2. 呼叫 `a()` 時，創建 `a` 的執行環境，並推入堆疊。
+  3. 呼叫 `b()` 時，創建 `b` 的執行環境，並推入堆疊。
+  4. 執行完成後，`b` 的執行環境從堆疊中彈出。
+  5. 繼續執行 `a`，最後彈出 `a` 的執行環境。
+  6. 最後全域執行環境退出堆疊。
+
+  **堆疊狀態：**
+
+  ```
+  1. 全域執行環境
+  2. a() 執行環境
+  3. b() 執行環境
+  ```
+
+---
+
+#### **小結**
+
+1. **Execution Context（執行環境）** 是 JavaScript 執行程式碼的基礎單位。
+2. 每個執行環境包含：
+   - **變數環境（Variable Environment）**
+   - **詞法環境（Lexical Environment）**
+   - **`this` 綁定**
+3. **全域執行環境** 只有一個，而 **函數執行環境** 可以有多個。
+4. **作用域鏈（Scope Chain）** 和 **Hoisting（提升）** 是執行環境的重要概念。
+5. JavaScript 使用 **Call Stack（呼叫堆疊）** 管理執行環境。
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 2. Lexical Environment 詞法環境
+
+#### 什麼是 Lexical Environment？
+
+Lexical Environment（詞法環境）是 JavaScript 中的一種結構，用來管理變數及函式的範圍與作用域。它是 JavaScript 執行程式碼時的核心概念之一，負責追蹤哪些變數、函式在當前的作用域中可以被存取。
+
+#### 組成部分
+
+Lexical Environment 包含兩個主要部分：
+
+1. **Environment Record（環境記錄）**  
+   儲存當前作用域中的所有變數和函式的實際記錄。
+2. **Outer Lexical Environment Reference（外部詞法環境參考）**  
+   指向外層的 Lexical Environment，形成一個作用域鏈（Scope Chain）。
+
+#### 類型
+
+Lexical Environment 可以分為以下幾種類型：
+
+1. **Global Lexical Environment（全域詞法環境）**
+   - 預設存在於程式的最外層，包含所有全域變數與全域函式。
+   - 沒有外部詞法環境參考，因此其 `Outer Lexical Environment Reference` 為 `null`。
+2. **Function Lexical Environment（函式詞法環境）**
+   - 每個函式在執行時都會創建自己的詞法環境。
+   - 包含函式內部定義的變數及參數。
+3. **Block Lexical Environment（區塊詞法環境）**
+   - ES6 引入的 `let` 和 `const` 創造了區塊作用域（Block Scope）。
+   - 每個區塊（如 `if`、`for` 等）都會創建自己的詞法環境。
+
+#### 運作機制
+
+1. **變數與函式的宣告**  
+   當 JavaScript 解譯器執行程式碼時，會根據程式碼結構建立對應的 Lexical Environment，並將變數、函式的宣告加入到 Environment Record 中。
+2. **作用域鏈（Scope Chain）**  
+   當執行程式碼時，JavaScript 會在當前的 Lexical Environment 中尋找變數或函式。如果找不到，會沿著 `Outer Lexical Environment Reference` 一層層向外尋找，直到找到為止。如果最外層的 Global Lexical Environment 也找不到，則會拋出錯誤。
+
+#### 示例
+
+```javascript
+let a = 10; // 全域詞法環境
+
+function foo() {
+  let b = 20; // 函式詞法環境
+  console.log(a); // 從外部詞法環境取得 'a'
+
+  if (true) {
+    let c = 30; // 區塊詞法環境
+    console.log(b); // 從函式詞法環境取得 'b'
+    console.log(c); // 從區塊詞法環境取得 'c'
+  }
+}
+
+foo();
+```
+
+#### 運行過程
+
+1. **全域層級**
+   - 建立 Global Lexical Environment，將 `a` 宣告並儲存到 Environment Record。
+2. **函式呼叫時**
+   - 呼叫 `foo()` 時，建立 `foo` 的 Function Lexical Environment，將 `b` 宣告並儲存到 Environment Record。
+   - `foo` 的外部詞法環境參考指向 Global Lexical Environment。
+3. **區塊內部**
+   - 進入 `if` 區塊時，建立 Block Lexical Environment，將 `c` 宣告並儲存到 Environment Record。
+   - 該區塊的外部詞法環境參考指向 `foo` 的 Function Lexical Environment。
+
+#### 注意事項
+
+1. **變數提升（Hoisting）**
+   - 變數宣告（`var`）會被提升到作用域的頂部，但值不會被初始化。
+   - 使用 `let` 和 `const` 則不會被提升到環境記錄的頂部，會進入「暫時性死區」（Temporal Dead Zone, TDZ）。
+2. **閉包（Closure）**
+   - 閉包是一種函式，能夠「記住」外部詞法環境中的變數，即使該外部函式已經執行完畢。
+
+#### 總結
+
+- Lexical Environment 是 JavaScript 中的核心機制，用來處理變數與函式的作用域。
+- 它包含 Environment Record 和 Outer Lexical Environment Reference，並透過作用域鏈來尋找變數。
+- Lexical Environment 的理解對於掌握 JavaScript 的作用域、變數提升與閉包等概念至關重要。
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 3. Hoisting 提升
+
+以下是關於 JavaScript 中 Hoisting（提升）概念的整理筆記，專有名詞附帶英文對應，並以繁體中文為主：
+
+---
+
+#### 什麼是 Hoisting（提升）？
+
+Hoisting（提升）是 JavaScript 中的一種行為，指的是變數（Variables）、函式（Functions）或類別（Classes）的宣告（Declaration）會在編譯階段被移動到其作用域（Scope）的頂部，但初始化（Initialization）不會一起提升。
+
+---
+
+#### Hoisting 的範圍
+
+1. **全域作用域（Global Scope）**
+2. **函式作用域（Function Scope）**
+3. **區塊作用域（Block Scope）** - ES6 之後新增，使用 `let` 和 `const` 宣告。
+
+---
+
+#### 變數（Variables）的提升
+
+1. **使用 `var` 宣告**
+
+   - 變數宣告會被提升，但初始化的部分不會。
+   - 在提升後，變數的值為 `undefined`。
+
+   **範例：**
+
+   ```javascript
+   console.log(a); // undefined
+   var a = 10;
+   ```
+
+   **提升後的行為：**
+
+   ```javascript
+   var a;
+   console.log(a); // undefined
+   a = 10;
+   ```
+
+2. **使用 `let` 和 `const` 宣告**
+
+   - `let` 和 `const` 的宣告也會被提升，但它們在「暫時性死區」（Temporal Dead Zone, TDZ）中，只有在程式碼執行到宣告的那一行時才可被存取。
+   - 嘗試在宣告前存取 `let` 或 `const` 會丟出 `ReferenceError`。
+
+   **範例：**
+
+   ```javascript
+   console.log(b); // ReferenceError: Cannot access 'b' before initialization
+   let b = 20;
+
+   console.log(c); // ReferenceError: Cannot access 'c' before initialization
+   const c = 30;
+   ```
+
+---
+
+#### 函式（Functions）的提升
+
+1. **函式宣告（Function Declaration）**
+
+   - 函式宣告會被完全提升，包括函式的名稱和其內部內容。
+
+   **範例：**
+
+   ```javascript
+   console.log(add(2, 3)); // 5
+   function add(x, y) {
+     return x + y;
    }
    ```
 
-   **reference**
-
-   - [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
-   - [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
-   - [重学 js —— Lexical Environments（词法环境）和 Environment Records（环境记录）](https://github.com/lizhongzhen11/lizz-blog/issues/49)
-
-   **[🔝 Back to Top](#table-of-contents)**
-
-3. ### Hoisting 提升
-
-   > 關鍵字: Hoisting 提升
-
-   **Hoisting** 提升
-
-   基本概念:
-
-   - 在`Execution Context` 建立階段預先將其內部`variables` 與 `functions`分配記憶體空間。
-   - `variables`預設賦值為 undefined 。
+   **提升後的行為：**
 
    ```javascript
-   console.log(a); //undefined
-   var a = "Hello World!";
+   function add(x, y) {
+     return x + y;
+   }
+   console.log(add(2, 3)); // 5
    ```
 
-   以上程式碼 a 會被提升 `Hoisting`
-   因此會執行的結果會同
+2. **函式表達式（Function Expression）**
+
+   - 使用 `var` 的函式表達式會遵循變數提升的規則，僅提升變數宣告，但函式本身不會被提升。
+   - 使用 `let` 或 `const` 宣告的函式表達式則會進入暫時性死區。
+
+   **範例：**
 
    ```javascript
-   var a; //undefined
-   console.log(a);
-   a = "Hello World!";
-   ```
-
-   **TDZ** 暫時死區 (Temporal Dead Zone)
-   概念:
-
-   - ES6 之後加入的 `let`/ `const`，避免宣告前使用該變數，`hoisting` 之後暫時存放的位置，以利後續的警告。
-   - 如果在宣告`let`/ `const`之前使用變數，存在「暫時死區」無法存取，使用它就會報錯 `ReferenceError`。
-
-   **Hoisting in closure**
-
-   - Case: 利用一個 for 迴圈每隔一秒印出一個數字:
-
-     ```javascript
-     for (var i = 0; i < 3; i++) {
-       setTimeout(() => {
-         console.log(i);
-       }, 1000);
-     }
-     ```
-
-     這是錯誤寫法，因為根據 hoisting 的原則，i 會是一個 global 變數。
-
-     其變數 i 為同一個 environment record 的紀錄，因此 for 會更改其值，上面的程式碼等同於:
-
-     ```javascript
-     var i;
-     for (i = 0; i < 3; i++) {
-       setTimeout(() => {
-         console.log(i);
-       }, 1000);
-     }
-     ```
-
-     - 這個問題可以這樣做
-
-       **方法 1** 使用 `IIFE`
-
-       捕捉環境的變數建立新的`Functional Execution Context`
-
-       ```javascript
-       for (var i = 0; i < 3; i++) {
-         (function (j) {
-           setTimeout(() => {
-             console.log(j);
-           }, j * 1000);
-         })(i);
-       }
-       ```
-
-       使用一個 `IIFE` ，它接受一個變數 j 當作參數，緊接著我們立刻將 i 傳進去當作參數呼叫它。每一次 `IIFE` 都產生了一個區域變數 j，值分別是 0, 1, 2。
-
-       **方法 2** 使用 ES6 `let`/ `const`
-
-       ```javascript
-       for (let i = 0; i < 3; i++) {
-         setTimeout(() => {
-           console.log(i);
-         }, i * 1000);
-       }
-       ```
-
-   **reference**
-
-   - [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
-   - [[教學] JavaScript 中的 Hoisting 是什麼意思？let const var 的差異居然是這個？](https://shubo.io/javascript-hoisting/)
-
-   **[🔝 Back to Top](#table-of-contents)**
-
-4. ### this
-
-   > 關鍵字: this
-
-   **this**
-
-   基本概念:
-
-   - this 就是一個指針，指向我們 invoke function 的對象。
-   - this 的指向的是目前呼叫 function 或方法的擁有者(owner)物件，也就是說它與 function 如何被呼叫或調用有關，雖然是同一 function 的呼叫，因為不同的物件呼叫，也有可能是不同的 this 值。
-   - this 的值跟`scope`作用域跟程式碼的位置在哪裡完全無關，只跟**你如何呼叫**有關
-
-   ```javascript
-   var obj = {
-     func1: function () {
-       console.log(this);
-     },
+   console.log(add); // undefined
+   var add = function (x, y) {
+     return x + y;
    };
-
-   function func2() {
-     console.log(this);
-   }
-
-   obj.func1();
-   func2();
    ```
 
-   在 JavaScript 中我們都是從左讀到右，解釋一下範例中的 this
-
-   - 執行 obj.func1()時的 this 指向 obj
-
-   - 執行 func2()時的 this 指向 window
-
-   **arrow function** 箭頭函式
+   **提升後的行為：**
 
    ```javascript
-   var obj2 = {
-     func: () => {
-       console.log(this);
-     },
+   var add;
+   console.log(add); // undefined
+   add = function (x, y) {
+     return x + y;
    };
-   obj2.func(); // window
-   // 非嚴格模式下
    ```
 
-   箭頭函數按`Lexical Environment`詞法環境，來綁定它的環境，所以 this 實際上會引用到原來的環境。
+3. **箭頭函式（Arrow Function）**
 
-   Note: Lexical Environment 詞法環境:在你在寫 code 的地方將變量決定變數的值
+   - 箭頭函式是函式表達式的一種，提升行為與 `let` 或 `const` 一致。
 
-   也就是說，當我們 invoke 此時 obj2.func()時，該箭頭函數其實在定義好 obj2 對象時就確定了它的 Lexical Environment 詞法環境。
+   **範例：**
 
-   - call(呼叫): 以個別提供的 this 值與傳入參數值來呼叫 function。
-   - bind(綁定): 建立一個新的 function，這個新 function 在呼叫時，會以提供的 this 值與一連串的傳入參數值來進行呼叫。
-   - apply(應用): 與 call 方法功能一樣，只是除了 this 值傳入外，另一個傳入參數值使用陣列。
-
-   https://github.com/xitu/gold-miner/blob/master/TODO1/mastering-javascript-this-keyword-detailed-guide.md
-
-   **reference**
-
-   - [JavaScript: Understanding the Weird Parts](https://www.udemy.com/course/understand-javascript/)
-   - [[教學] JavaScript 中的 Hoisting 是什麼意思？let const var 的差異居然是這個？](https://shubo.io/javascript-hoisting/)
-
-   **[🔝 Back to Top](#table-of-contents)**
-
-5. ### closure
-
-   基本概念:
-
-   - 外層函數執行完消逝，但內部函數卻依然保留了已消逝的外部環境變量，使得在執行內部函數時，完整記錄了他的值
-
-   詞法作用域(js)
-
-   ```js
-   function start() {
-   alert(args); // 真正執行的作用域
-   }
-   function server() {
-   var args = “parameter here.”;
-   start(); // 這裡只是調用點
-   }
-   server(); // ReferenceError: args is not defined
-
+   ```javascript
+   console.log(add); // ReferenceError: Cannot access 'add' before initialization
+   const add = (x, y) => x + y;
    ```
 
-   動態作用域(其他語言)
+---
 
-   ```js
-   function start() {
-   alert(args);
-   }
-   function server() {
-   var args = “parameter here.”;
-   start(); // 在呼叫函數時決定可訪問的變數
-   }
-   server(); // parameter here.
+#### 類別（Classes）的提升
 
+1. **類別宣告（Class Declaration）**
+
+   - 類別宣告會被提升，但與 `let` 和 `const` 相同，會進入暫時性死區。
+   - 嘗試在宣告前使用類別會丟出 `ReferenceError`。
+
+   **範例：**
+
+   ```javascript
+   const obj = new MyClass(); // ReferenceError: Cannot access 'MyClass' before initialization
+   class MyClass {
+     constructor() {
+       this.name = "Hoisting Example";
+     }
+   }
    ```
 
-   **reference**
+2. **類別表達式（Class Expression）**
 
-   - [無法理解的-js-閉包原理](https://angela52799.medium.com/%E7%84%A1%E6%B3%95%E7%90%86%E8%A7%A3%E7%9A%84-js-%E9%96%89%E5%8C%85%E5%8E%9F%E7%90%86-645fde1076fc)
+   - 類似於函式表達式，僅變數宣告會被提升，但類別本身不會被提升。
+
+   **範例：**
+
+   ```javascript
+   const obj = new MyClass(); // ReferenceError: Cannot access 'MyClass' before initialization
+   const MyClass = class {
+     constructor() {
+       this.name = "Hoisting Example";
+     }
+   };
+   ```
+
+---
+
+#### 暫時性死區（Temporal Dead Zone, TDZ）
+
+暫時性死區是指從作用域開始到變數被宣告的這段期間，變數無法被存取。這是 `let`、`const` 和類別的特性，用來防止使用未初始化的變數。
+
+**範例：**
+
+```javascript
+console.log(x); // ReferenceError: Cannot access 'x' before initialization
+let x = 10;
+```
+
+---
+
+#### 注意事項
+
+1. **初始化與賦值的區別**
+   - 提升只會針對「宣告」部分進行，初始化或賦值的部分不會被提升。
+2. **避免使用 `var`**
+
+   - `var` 的提升行為容易導致預期外的錯誤，建議使用 `let` 或 `const`。
+
+3. **讀懂錯誤訊息**
+   - 提升相關的錯誤通常是 `ReferenceError` 或 `undefined`，仔細檢查變數的宣告順序。
+
+---
+
+#### 總結
+
+| 宣告方式   | 提升行為                                                            |
+| ---------- | ------------------------------------------------------------------- |
+| `var`      | 宣告提升，初始化不提升，未初始化時為 `undefined`。                  |
+| `let`      | 宣告提升，但進入暫時性死區，未初始化前存取會丟出 `ReferenceError`。 |
+| `const`    | 行為與 `let` 相同，但必須在宣告時初始化，否則會丟出 `SyntaxError`。 |
+| 函式宣告   | 完全提升，包括函式名稱與內容。                                      |
+| 函式表達式 | 僅變數宣告提升，函式本身不會被提升，遵循變數的提升行為。            |
+| 箭頭函式   | 行為與函式表達式一致。                                              |
+| 類別宣告   | 宣告提升，但進入暫時性死區，未初始化前存取會丟出 `ReferenceError`。 |
+| 類別表達式 | 僅變數宣告提升，類別本身不會被提升，遵循變數的提升行為。            |
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 4. Scope 作用域
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 5. Global Scope 全域作用域
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 6. Function Scope 函數作用域
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 7. Block Scope 塊作用域
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 8. Variable Declaration 變數宣告
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 9. var, let, const 的區別
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 10. Temporal Dead Zone 暫時性死區
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 11. Closure 閉包
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 12. Garbage Collection 垃圾回收機制
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 13. Memory Management 記憶體管理
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 14. Call Stack 呼叫堆疊
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 15. Event Loop 事件迴圈
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 16. Callback Queue 回調隊列
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 17. Microtask Queue 微任務隊列
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 18. Promises Promise 機制
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 19. Async/Await
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+### 20. JavaScript 引擎 如 V8 的架構
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
