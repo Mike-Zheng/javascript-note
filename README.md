@@ -12,27 +12,34 @@
 
 ### Table of Contents
 
-| No. | Content                                                                |
-| --- | ---------------------------------------------------------------------- |
-| 1   | [Execution Context 執行環境](#1-execution-context-執行環境)            |
-| 2   | [Lexical Environment 詞法環境](#2-lexical-environment-詞法環境)        |
-| 3   | [Hoisting 提升](#3-hoisting-提升)                                      |
-| 4   | [Scope 作用域](#4-scope-作用域)                                        |
-| 5   | [Global Scope 全域作用域](#5-global-scope-全域作用域)                  |
-| 6   | [Function Scope 函數作用域](#6-function-scope-函數作用域)              |
-| 7   | [Block Scope 塊作用域](#7-block-scope-塊作用域)                        |
-| 8   | [Variable Declaration 變數宣告](#8-variable-declaration-變數宣告)      |
-| 9   | [Temporal Dead Zone 暫時性死區](#9-temporal-dead-zone-暫時性死區)      |
-| 10  | [Closure 閉包](#10-closure-閉包)                                       |
-| 11  | [Garbage Collection 垃圾回收機制](#11-garbage-collection-垃圾回收機制) |
-| 12  | [Memory Management 記憶體管理](#12-memory-management-記憶體管理)       |
-| 13  | [Call Stack 呼叫堆疊](#13-call-stack-呼叫堆疊)                         |
-| 14  | [Event Loop 事件迴圈](#14-event-loop-事件迴圈)                         |
-| 15  | [Callback Queue 回調隊列](#15-callback-queue-回調隊列)                 |
-| 16  | [Microtask Queue 微任務隊列](#16-microtask-queue-微任務隊列)           |
-| 17  | [Promises Promise 機制](#17-promises-promise-機制)                     |
-| 18  | [Async/Await](#18-asyncawait)                                          |
-| 19  | [JavaScript 引擎 如 V8 的架構](#19-javascript-引擎-如-v8-的架構)       |
+| No. | Content                                                                         |
+| --- | ------------------------------------------------------------------------------- |
+| 1   | [Execution Context 執行環境](#1-execution-context-執行環境)                     |
+| 2   | [Lexical Environment 詞法環境](#2-lexical-environment-詞法環境)                 |
+| 3   | [Hoisting 提升](#3-hoisting-提升)                                               |
+| 4   | [Scope 作用域](#4-scope-作用域)                                                 |
+| 5   | [Variable Declaration 變數宣告](#5-variable-declaration-變數宣告)               |
+| 6   | [Temporal Dead Zone 暫時性死區](#6-temporal-dead-zone-暫時性死區)               |
+| 7   | [Prototype and Inheritance 原型與繼承](#7-prototype-and-inheritance-原型與繼承) |
+| 8   | [Closure 閉包](#8-closure-閉包)                                                 |
+| 9   | [Error Handling 錯誤處理](#9-error-handling-錯誤處理)                           |
+| 10  | [Call Stack 呼叫堆疊](#10-call-stack-呼叫堆疊)                                  |
+| 11  | [Memory Management 記憶體管理](#11-memory-management-記憶體管理)                |
+| 12  | [Garbage Collection 垃圾回收機制](#12-garbage-collection-垃圾回收機制)          |
+| 13  | [Asynchronous Patterns 非同步模式](#13-asynchronous-patterns-非同步模式)        |
+| 14  | [Promises Promise 機制](#14-promises-promise-機制)                              |
+| 15  | [Async/Await](#15-asyncawait)                                                   |
+| 16  | [Callback Queue 回調隊列](#16-callback-queue-回調隊列)                          |
+| 17  | [Microtask Queue 微任務隊列](#17-microtask-queue-微任務隊列)                    |
+| 18  | [Event Loop 事件迴圈](#18-event-loop-事件迴圈)                                  |
+| 19  | [Event Delegation 事件委派](#19-event-delegation-事件委派)                      |
+| 20  | [DOM Manipulation DOM 操作](#20-dom-manipulation-dom-操作)                      |
+| 21  | [Module System 模塊系統](#21-module-system-模塊系統)                            |
+| 22  | [Web APIs](#22-web-apis)                                                        |
+| 23  | [JavaScript Security 安全](#23-javascript-security-安全)                        |
+| 24  | [JavaScript Performance 性能](#24-javascript-performance-性能)                  |
+| 25  | [Data Structures 資料結構](#25-data-structures-資料結構)                        |
+| 26  | [JavaScript 引擎 如 V8 的架構](#26-javascript-引擎-如-v8-的架構)                |
 
 ---
 
@@ -246,6 +253,8 @@ JavaScript 使用 **Call Stack（呼叫堆疊）** 管理執行環境。每個�
 
 **[🔝 Back to Top](#table-of-contents)**
 
+---
+
 ### 2. Lexical Environment 詞法環境
 
 #### 什麼是 Lexical Environment？
@@ -312,7 +321,7 @@ foo();
    - 進入 `if` 區塊時，建立 Block Lexical Environment，將 `c` 宣告並儲存到 Environment Record。
    - 該區塊的外部詞法環境參考指向 `foo` 的 Function Lexical Environment。
 
-#### 注意事項
+#### Lexical Environment 注意事項
 
 1. **變數提升（Hoisting）**
    - 變數宣告（`var`）會被提升到作用域的頂部，但值不會被初始化。
@@ -320,7 +329,7 @@ foo();
 2. **閉包（Closure）**
    - 閉包是一種函式，能夠「記住」外部詞法環境中的變數，即使該外部函式已經執行完畢。
 
-#### 總結
+#### Lexical Environment 總結
 
 - Lexical Environment 是 JavaScript 中的核心機制，用來處理變數與函式的作用域。
 - 它包含 Environment Record 和 Outer Lexical Environment Reference，並透過作用域鏈來尋找變數。
@@ -328,11 +337,9 @@ foo();
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 3. Hoisting 提升
-
-以下是關於 JavaScript 中 Hoisting（提升）概念的整理筆記，專有名詞附帶英文對應，並以繁體中文為主：
-
 ---
+
+### 3. Hoisting 提升
 
 #### 什麼是 Hoisting（提升）？
 
@@ -496,7 +503,7 @@ let x = 10;
 
 ---
 
-#### 注意事項
+#### Hoisting 注意事項
 
 1. **初始化與賦值的區別**
    - 提升只會針對「宣告」部分進行，初始化或賦值的部分不會被提升。
@@ -509,7 +516,7 @@ let x = 10;
 
 ---
 
-#### 總結
+#### Hoisting 總結
 
 | 宣告方式   | 提升行為                                                            |
 | ---------- | ------------------------------------------------------------------- |
@@ -524,19 +531,15 @@ let x = 10;
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 4. Scope 作用域
-
-在 JavaScript 中，**作用域 (Scope)** 決定了程式碼中的變數、函式以及其他標識符的可訪問性及使用範圍。以下是完整的 JS 作用域筆記整理：
-
 ---
 
-#### **作用域的分類**
+#### **作用域分類**
 
 1. **全域作用域 (Global Scope)**
 
-   - 在程式的頂層宣告的變數屬於全域作用域。它們可以在程式的任何部分被存取。
-   - 全域變數會被掛載到全域物件上（例如 `window`、`global` 等）。
-   - 範例：
+   - 在程式最外層宣告的變數，屬於全域作用域，可以在程式的任何部分存取。
+   - 全域變數會掛載到全域物件上（如 `window` 或 `global`）。
+   - **範例：**
 
      ```javascript
      var globalVar = "I am global"; // 全域作用域
@@ -545,8 +548,8 @@ let x = 10;
 
 2. **區域作用域 (Local Scope)**
 
-   - 在函式內部或區塊內部宣告的變數屬於區域作用域，僅能在該範圍內存取。
-   - 範例：
+   - 在函式內部或區塊內部宣告的變數，僅能在該範圍內存取。
+   - **範例：**
 
      ```javascript
      function testScope() {
@@ -559,8 +562,8 @@ let x = 10;
 
 3. **區塊作用域 (Block Scope)**
 
-   - 使用 `let` 或 `const` 宣告的變數具備區塊作用域，僅在該區塊 `{}` 中有效。
-   - 範例：
+   - 使用 `let` 或 `const` 宣告的變數，具備區塊作用域，僅在該區塊 `{}` 中有效。
+   - **範例：**
 
      ```javascript
      {
@@ -572,12 +575,12 @@ let x = 10;
 
 ---
 
-#### **作用域的特性**
+#### **作用域特性**
 
-1. **Lexical Scope (詞法作用域)**  
-   JavaScript 使用詞法作用域，這意味著作用域是由程式碼的結構在撰寫時決定，而不是在程式執行時決定。
+1. **詞法作用域 (Lexical Scope)**
 
-   - 範例：
+   - JavaScript 使用詞法作用域，作用域由程式碼的結構在撰寫時決定，而非執行時。
+   - **範例：**
 
      ```javascript
      function outerFunction() {
@@ -592,8 +595,8 @@ let x = 10;
 
 2. **作用域鏈 (Scope Chain)**
 
-   - 當尋找變數時，JavaScript 會首先在當前作用域中查找，若找不到，則向外層作用域查找，直到全域作用域。
-   - 範例：
+   - JavaScript 查找變數時，會先在當前作用域中找，若找不到則向外層作用域查找，直到全域作用域。
+   - **範例：**
 
      ```javascript
      var globalVar = "global";
@@ -615,9 +618,9 @@ let x = 10;
 
 #### **變數提升 (Hoisting)**
 
-- JavaScript 的 `var` 具有變數提升 (Hoisting) 特性，但提升的變數僅初始化為 `undefined`，而非其賦值內容。
-- `let` 和 `const` 也會被提升，但它們會形成暫時性死區 (Temporal Dead Zone)，在宣告前無法存取。
-- 範例：
+- **`var` 的提升：** 變數提升後僅初始化為 `undefined`，不包含其賦值內容。
+- **`let` 和 `const` 的提升：** 會形成暫時性死區，在宣告前無法存取。
+- **範例：**
 
   ```javascript
   console.log(hoistedVar); // undefined
@@ -631,8 +634,8 @@ let x = 10;
 
 #### **函式作用域 (Function Scope)**
 
-- 使用 `var` 宣告的變數具有函式作用域，僅在函式內部有效。
-- 範例：
+- 使用 `var` 宣告的變數，僅在函式內部有效。
+- **範例：**
 
   ```javascript
   function funcScopeExample() {
@@ -645,29 +648,93 @@ let x = 10;
 
 ---
 
+#### **全域作用域與最佳實踐**
+
+1. **全域變數：**
+
+   - 全域作用域中的變數稱為全域變數，可以在任何地方存取，但容易造成命名衝突。
+   - **範例：**
+
+     ```javascript
+     var globalVar = "我是全域變數";
+
+     function printGlobalVar() {
+       console.log(globalVar); // 存取全域變數
+     }
+     printGlobalVar(); // 輸出：我是全域變數
+     ```
+
+2. **全域物件：**
+
+   - 全域作用域中的變數和函式會成為全域物件的屬性。
+   - 瀏覽器中的全域物件是 `window`，Node.js 中是 `global`。
+   - **範例：**
+
+     ```javascript
+     var myVar = "Hello World"; // myVar 成為 window 的屬性
+     console.log(window.myVar); // 輸出：Hello World
+     ```
+
+3. **避免全域污染：**
+
+   - 減少使用全域變數，使用模組化或區塊作用域。
+   - **範例：**
+
+     ```javascript
+     (function () {
+       var localVar = "我是封裝在函式內的變數";
+       console.log(localVar); // 輸出：我是封裝在函式內的變數
+     })();
+     console.log(typeof localVar); // 輸出：undefined
+     ```
+
+4. **最佳實踐：**
+
+   - 使用 `let` 和 `const`，避免使用 `var`。
+   - 使用命名空間（Namespace）封裝程式碼。
+   - **範例：**
+
+     ```javascript
+     const MyApp = {
+       config: {
+         apiUrl: "https://api.example.com",
+       },
+       utils: {
+         logMessage: function (message) {
+           console.log(message);
+         },
+       },
+     };
+     MyApp.utils.logMessage("Hello Namespace!"); // 輸出：Hello Namespace!
+     ```
+
+---
+
 #### **區塊作用域與 `let`、`const`**
 
-1. `let` 和 `const` 創造區塊作用域，並避免 `var` 的作用域污染問題。
-2. `const` 用於宣告常數，需在宣告時初始化，且無法重新賦值。
-3. 範例：
+1. **`let` 和 `const` 的特性：**
 
-   ```javascript
-   {
-     let blockVar = "block scoped";
-     const blockConst = "constant scoped";
-     console.log(blockVar); // 可存取
-     console.log(blockConst); // 可存取
-   }
-   // console.log(blockVar);  // 錯誤：區塊外部無法存取
-   // console.log(blockConst); // 錯誤：區塊外部無法存取
-   ```
+   - 創造區塊作用域，避免 `var` 的作用域污染問題。
+   - `const` 用於宣告常數，需初始化，且無法重新賦值。
+   - **範例：**
+
+     ```javascript
+     {
+       let blockVar = "block scoped";
+       const blockConst = "constant scoped";
+       console.log(blockVar); // 可存取
+       console.log(blockConst); // 可存取
+     }
+     // console.log(blockVar);  // 錯誤：區塊外部無法存取
+     // console.log(blockConst); // 錯誤：區塊外部無法存取
+     ```
 
 ---
 
 #### **動態作用域與 `this`**
 
-- **`this` 關鍵字**指向執行時的上下文，而非由詞法作用域決定。
-- 範例：
+- **`this` 的特性：** 指向執行時的上下文，而非由詞法作用域決定。
+- **範例：**
 
   ```javascript
   function showThis() {
@@ -680,8 +747,8 @@ let x = 10;
 
 #### **閉包 (Closure)**
 
-- 閉包是指函式可以「記住」並存取其定義時所在的作用域，即使函式在其他地方執行。
-- 範例：
+- 閉包指函式可以記住並存取其定義時的作用域，即使函式在其他地方執行。
+- **範例：**
 
   ```javascript
   function makeCounter() {
@@ -698,335 +765,228 @@ let x = 10;
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 5. Global Scope 全域作用域
+---
 
-在 JavaScript 中，**全域作用域（Global Scope）** 是指在程式的最外層定義的變數或函式，這些變數或函式可以在程式的任何地方被存取。以下是完整的筆記整理：
+### 4. Scope 作用域
+
+JavaScript 的作用域（Scope）是指程式中變數、函式等標識符的可訪問範圍。作用域確保代碼的結構清晰，並避免變數命名衝突。以下是有關作用域的完整筆記：
 
 ---
 
-#### 什麼是全域作用域？
+#### 4.1 作用域的種類
 
-- 全域作用域是指變數或函式在程式中最外層定義，這些全域的資源可以在任何地方被存取。
-- 任何未在函式內或區塊內（例如 `if` 或 `for`）定義的變數或函式，默認屬於全域作用域。
+1. **全域作用域（Global Scope）**
 
----
-
-#### 全域變數（Global Variables）
-
-- **定義：** 全域作用域中的變數稱為全域變數。
-- **特性：**
-  - 可以在任何地方存取。
-  - 容易造成命名衝突，因為所有程式碼都能存取或修改它。
-- **例子：**
-
-  ```javascript
-  var globalVar = "我是全域變數"; // 定義全域變數
-
-  function printGlobalVar() {
-    console.log(globalVar); // 存取全域變數
-  }
-
-  printGlobalVar(); // 輸出：我是全域變數
-  ```
-
----
-
-#### 全域物件（Global Object）
-
-- **定義：** 全域作用域中的所有全域變數和函式都成為全域物件的屬性。全域物件在瀏覽器中是 `window`，在 Node.js 中是 `global`。
-- **常見全域物件：**
-  - 在瀏覽器中：`window`。
-  - 在 Node.js 中：`global`。
-  - 在 ES2020 中：`globalThis`（統一提供跨平台的全域物件）。
-- **例子：**
-
-  ```javascript
-  var myVar = "Hello World"; // myVar 成為 window 的屬性
-
-  console.log(window.myVar); // 輸出：Hello World
-  ```
-
----
-
-#### 關鍵字 `var`、`let` 和 `const` 的影響
-
-- 使用 `var` 定義的變數，會自動成為全域物件的屬性。
-- 使用 `let` 和 `const` 定義的變數，雖然也是全域作用域的一部分，但不會成為全域物件的屬性。
-- **例子：**
-
-  ```javascript
-  var varVariable = "我是 var 定義的全域變數";
-  let letVariable = "我是 let 定義的全域變數";
-  const constVariable = "我是 const 定義的全域變數";
-
-  console.log(window.varVariable); // 輸出：我是 var 定義的全域變數
-  console.log(window.letVariable); // 輸出：undefined
-  console.log(window.constVariable); // 輸出：undefined
-  ```
-
----
-
-#### 全域污染（Global Pollution）
-
-- **定義：** 當程式中有大量的全域變數時，容易出現命名衝突或非預期的行為，這種情況稱為全域污染。
-- **避免方法：**
-  - 使用區塊作用域（Block Scope）或模組化（Modules）。
-  - 使用 `let` 和 `const` 避免不必要的全域變數。
-  - 將程式碼封裝在自執行函式（IIFE, Immediately Invoked Function Expression）中。
-- **例子：**
-
-  ```javascript
-  // 自執行函式避免全域污染
-  (function () {
-    var localVar = "我是封裝在函式內的變數";
-    console.log(localVar); // 輸出：我是封裝在函式內的變數
-  })();
-
-  console.log(typeof localVar); // 輸出：undefined，localVar 不存在於全域作用域
-  ```
-
----
-
-#### 全域作用域的最佳實踐
-
-1. **減少使用全域變數：** 將變數封裝在函式或模組內。
-2. **使用模組化程式設計：** 透過 ES6 的 `import` 和 `export`，避免直接使用全域作用域。
-3. **善用 `let` 和 `const`：** 避免使用 `var`，減少全域物件污染。
-4. **命名空間（Namespace）：** 使用物件作為命名空間來封裝程式碼，避免命名衝突。
-
-   ```javascript
-   const MyApp = {
-     config: {
-       apiUrl: "https://api.example.com",
-     },
-     utils: {
-       logMessage: function (message) {
-         console.log(message);
-       },
-     },
-   };
-
-   MyApp.utils.logMessage("Hello Namespace!"); // 輸出：Hello Namespace!
-   ```
-
-**[🔝 Back to Top](#table-of-contents)**
-
-### 6. Function Scope 函數作用域
-
-在 JavaScript 中，作用域（Scope）指的是變數或函數的可訪問範圍。函數作用域（Function Scope）是 JavaScript 中的一種作用域規則，它規定了變數和函數僅在定義它們的函數內部是可見的。以下是有關 Function Scope 的詳細筆記：
-
----
-
-#### 什麼是函數作用域？
-
-- 函數作用域（Function Scope）是指**變數僅在其被定義的函數內部有效**，在函數外部無法訪問該變數。
-- 使用 `var` 宣告的變數會遵循函數作用域。
-- 函數作用域使得函數內部的變數和函數可以被隔離，避免與外部作用域發生衝突。
-
----
-
-#### 函數作用域的特性
-
-1. **變數的可訪問性**
-
-   - 在函數內部宣告的變數只能在函數內部訪問，外部無法直接訪問。
-   - 例如：
+   - 定義：在任何函式或區塊之外宣告的變數屬於全域作用域。
+   - 特性：全域作用域的變數可以在程式的任何地方被存取。
+   - 範例：
 
      ```javascript
-     function myFunction() {
-       var localVariable = "我是局部變數"; // localVariable 是局部變數
-       console.log(localVariable); // 可在函數內部訪問
+     let globalVar = "我是全域變數";
+     function showGlobalVar() {
+       console.log(globalVar); // 可以存取全域變數
      }
-     console.log(localVariable); // Error: localVariable is not defined
+     showGlobalVar();
      ```
 
-2. **作用域鏈（Scope Chain）**
+2. **函式作用域（Function Scope）**
 
-   - 當函數內部需要訪問變數時，JavaScript 會沿著作用域鏈尋找變數。
-   - 作用域鏈會從函數內部開始尋找，若找不到，則向外部作用域（例如全域作用域）尋找。
-
-3. **變數遮蔽（Variable Shadowing）**
-
-   - 如果函數內部定義了一個與外部作用域同名的變數，內部變數會遮蔽外部變數。
-   - 例如：
+   - 定義：在函式內宣告的變數只能在該函式內存取。
+   - 特性：函式作用域是 JavaScript 中最早的作用域類型。
+   - 範例：
 
      ```javascript
-     var name = "外部作用域";
-
      function myFunction() {
-       var name = "內部作用域"; // 內部變數遮蔽外部變數
-       console.log(name); // 內部作用域
+       let functionVar = "我是函式作用域的變數";
+       console.log(functionVar); // 可以存取
      }
      myFunction();
-     console.log(name); // 外部作用域
+     // console.log(functionVar); // 無法存取，會報錯
      ```
 
-4. **`var` 的函數作用域**
+3. **區塊作用域（Block Scope）**
 
-   - 使用 `var` 宣告的變數具有函數作用域。
-   - 例如：
+   - 定義：用 `{}` 包裹的區塊內宣告的變數只能在該區塊內存取。
+   - 關鍵字：`let` 和 `const` 支援區塊作用域；`var` 不支援。
+   - 範例：
 
      ```javascript
-     function testVar() {
-       var x = 10;
-       if (true) {
-         var x = 20; // 重新賦值，作用域仍然是函數作用域
-         console.log(x); // 20
-       }
-       console.log(x); // 20 (同一作用域內被重新賦值)
+     {
+       let blockVar = "我是區塊作用域的變數";
+       console.log(blockVar); // 可以存取
      }
-     testVar();
+     // console.log(blockVar); // 無法存取，會報錯
      ```
 
 ---
 
-#### 函數作用域 vs 區塊作用域（Block Scope）
+#### 4.2 作用域鏈（Scope Chain）
 
-- 使用 `let` 和 `const` 宣告的變數遵循區塊作用域（Block Scope），而 `var` 則遵循函數作用域。
-- `let` 和 `const` 的區塊作用域使得它們的作用範圍僅限於 `{}` 大括號內，而 `var` 的作用範圍擴展到整個函數。
-- 例如：
-
-  ```javascript
-  function testScope() {
-    if (true) {
-      var varVariable = "我是 var"; // 函數作用域
-      let letVariable = "我是 let"; // 區塊作用域
-      const constVariable = "我是 const"; // 區塊作用域
-    }
-    console.log(varVariable); // "我是 var"
-    console.log(letVariable); // Error: letVariable is not defined
-    console.log(constVariable); // Error: constVariable is not defined
-  }
-  testScope();
-  ```
-
----
-
-#### 函數作用域的好處
-
-1. **避免命名衝突**
-   - 函數作用域將變數封裝在函數內部，減少命名衝突的可能性。
-2. **保持程式碼的模組化**
-   - 將程式碼邏輯分隔在不同的函數內部，提升可讀性和維護性。
-3. **提供封裝性（Encapsulation）**
-   - 函數作用域允許特定的邏輯和數據僅在函數內部可見，增強安全性。
-
----
-
-#### 注意事項
-
-1. **`var` 的提升（Hoisting）**
-
-   - 使用 `var` 宣告的變數會被提升到函數作用域的頂部，但不會初始化。
-   - 例如：
-
-     ```javascript
-     function hoistingExample() {
-       console.log(myVar); // undefined
-       var myVar = "我是 var";
-       console.log(myVar); // 我是 var
-     }
-     hoistingExample();
-     ```
-
-2. **全域作用域（Global Scope）**
-   - 如果在函數外部使用 `var` 宣告變數，該變數屬於全域作用域，可能導致命名衝突。
-   - 建議使用 `let` 或 `const` 宣告變數以避免污染全域作用域。
-
----
-
-#### 總結
-
-- 函數作用域（Function Scope）是 JavaScript 中的核心概念，使用 `var` 宣告變數會遵循函數作用域。
-- 函數作用域提供封裝性與模組化，減少命名衝突。
-- 雖然函數作用域有其特性，但在現代 JavaScript 中，建議使用 `let` 和 `const`，以避免 `var` 的提升和作用域混淆。
-
-**[🔝 Back to Top](#table-of-contents)**
-
-### 7. Block Scope 塊作用域
-
-在 JavaScript 中，塊作用域（Block Scope）是由一對大括號 `{}` 定義的範圍，最常見於控制流程語句如 `if`、`for`、`while`，以及在 ES6 中的 `let` 和 `const` 關鍵字。塊作用域的出現使得變量的可見範圍更加清晰，並避免了全域變量污染問題。
-
-#### 7.1 變量宣告
-
-- **let**
-
-  - 使用 `let` 宣告的變量具有塊作用域。
-  - 範例：
-
-    ```javascript
-    if (true) {
-      let x = 10;
-      console.log(x); // 10
-    }
-    console.log(x); // ReferenceError: x is not defined
-    ```
-
-- **const**
-
-  - `const` 宣告的變量同樣具有塊作用域，並且必須被初始化，值不可重新指派。
-  - 範例：
-
-    ```javascript
-    if (true) {
-      const y = 20;
-      console.log(y); // 20
-    }
-    console.log(y); // ReferenceError: y is not defined
-    ```
-
-#### 7.2 暫時性死區 (Temporal Dead Zone)
-
-- 在塊作用域內，從代碼塊開始到變量用 `let` 或 `const` 宣告之前的區域稱為暫時性死區。
-- 該區域內引用這些變量會導致 ReferenceError。
+- 定義：當一個變數在當前作用域中找不到時，JavaScript 會沿著作用域鏈往上一層尋找，直到全域作用域或遇到 `undefined`。
+- 特性：作用域鏈由嵌套的函式或區塊結構形成。
 - 範例：
+
   ```javascript
-  {
-    console.log(z); // ReferenceError: Cannot access 'z' before initialization
-    let z = 30;
+  let globalVar = "我是全域變數";
+
+  function outerFunction() {
+    let outerVar = "我是外部函式的變數";
+
+    function innerFunction() {
+      let innerVar = "我是內部函式的變數";
+      console.log(globalVar); // 往上找，找到全域變數
+      console.log(outerVar); // 往上找，找到外部函式變數
+      console.log(innerVar); // 直接找到內部函式變數
+    }
+
+    innerFunction();
   }
+
+  outerFunction();
   ```
 
-#### 7.3 比較 var、let 與 const
+---
 
-- **var**
+#### 4.3 關鍵字的作用域行為
 
-  - `var` 宣告的變量是函數作用域（Function Scope）或全域作用域（Global Scope），不支援塊作用域。
-  - 範例：
+1. **`var` 的特性**
 
-    ```javascript
-    if (true) {
-      var a = 5;
+   - 僅支援函式作用域，不支援區塊作用域。
+   - 可能導致變數提升（Hoisting），使程式易出現意外行為。
+   - 範例：
+
+     ```javascript
+     {
+       var varVariable = "我是 var 宣告的變數";
+     }
+     console.log(varVariable); // 可以存取，因 var 不支援區塊作用域
+     ```
+
+2. **`let` 的特性**
+
+   - 支援區塊作用域，避免變數提升。
+   - 範例：
+
+     ```javascript
+     {
+       let letVariable = "我是 let 宣告的變數";
+       console.log(letVariable); // 可以存取
+     }
+     // console.log(letVariable); // 無法存取，會報錯
+     ```
+
+3. **`const` 的特性**
+
+   - 支援區塊作用域，類似 `let`，但宣告後不可重新賦值。
+   - 範例：
+
+     ```javascript
+     const constVariable = "我是 const 宣告的變數";
+     console.log(constVariable); // 可以存取
+     // constVariable = "重新賦值"; // 會報錯，因 const 不可重新賦值
+     ```
+
+---
+
+#### 4.4 變數提升（Hoisting）
+
+- 定義：在 JavaScript 中，使用 `var` 宣告的變數會在程式執行前被提升到作用域的最上方，但不會賦值。
+- 特性：`let` 和 `const` 不會被提升。
+- 範例：
+
+  ```javascript
+  console.log(hoistedVar); // undefined，因為 var 被提升但未賦值
+  var hoistedVar = "我是被提升的變數";
+
+  // console.log(hoistedLet); // 會報錯，因 let 不會被提升
+  let hoistedLet = "我是未被提升的變數";
+  ```
+
+---
+
+#### 4.5 閉包（Closure）
+
+- 定義：閉包是指函式可以記住並存取其定義時的作用域，即使該函式在作用域之外執行。
+- 特性：閉包常用於模擬私有變數或封裝程式邏輯。
+- 範例：
+
+  ```javascript
+  function createCounter() {
+    let count = 0; // 私有變數，外部無法直接存取
+
+    return function () {
+      count++;
+      console.log(count);
+    };
+  }
+
+  const counter = createCounter();
+  counter(); // 1
+  counter(); // 2
+  ```
+
+---
+
+#### 4.6 模塊作用域（Module Scope）
+
+- 定義：在 ES6 中，模組（Module）提供了一個獨立的作用域，模組內的變數和函式不會污染全域作用域。
+- 關鍵字：使用 `export` 和 `import` 進行模組化。
+- 範例：
+
+  ```javascript
+  // module.js
+  export const moduleVar = "我是模組作用域的變數";
+
+  // main.js
+  import { moduleVar } from "./module.js";
+  console.log(moduleVar); // 可以存取模組變數
+  ```
+
+---
+
+#### 4.7 嚴格模式（Strict Mode）
+
+- 定義：嚴格模式可以提升作用域的安全性，避免不明確的變數宣告。
+- 啟用方式：在程式碼或函式的開頭使用 `"use strict"`。
+- 特性：未宣告的變數會拋出錯誤。
+- 範例：
+
+  ```javascript
+  "use strict";
+  // undeclaredVar = "未宣告的變數"; // 會報錯
+  let declaredVar = "已宣告的變數";
+  console.log(declaredVar); // 正常運行
+  ```
+
+---
+
+#### 4.8 作用域與事件循環（Event Loop）
+
+- 定義：事件循環是 JavaScript 的非同步執行機制，作用域會影響閉包和非同步任務的行為。
+- 範例：
+
+  ```javascript
+  function asyncTest() {
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => {
+        console.log(i); // 正常輸出：0, 1, 2
+      }, 100);
     }
-    console.log(a); // 5
-    ```
-
-- **let 與 const**
-  - 這兩者支援塊作用域，能夠避免變量提升（Hoisting）帶來的問題。
-  - 它們提升了代碼可讀性和維護性。
-
-#### 7.4 使用建議
-
-- 優先使用 `let` 或 `const` 來宣告變量，尤其是在需要塊作用域的情況下。
-- 使用 `const` 宣告不會被重新賦值的變量，以增加代碼的穩定性。
-- 僅在需要重新賦值的情況下使用 `let`。
-
-#### 7.5 常見問題
-
-- **作用域污染**
-  - 使用 `var` 可能導致作用域污染，應儘量避免。
-- **意外重複宣告**
-  - 使用 `let` 和 `const` 可以防止同一作用域內重複宣告變量。
+  }
+  asyncTest();
+  ```
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 8. Variable Declaration 變數宣告
+---
+
+### 5. Variable Declaration 變數宣告
 
 在 JavaScript 中，變數宣告 (Variable Declaration) 是建立和儲存資料的基本方式。以下是 JavaScript 中的三種主要變數宣告方式：`var`、`let` 和 `const`，以及它們的特性與使用範例。
 
 ---
 
-#### 8.1 `var` 宣告
+#### 5.1 `var` 宣告
 
 `var` 是 JavaScript 中最早出現的變數宣告方式，但因為作用域 (Scope) 的行為較不直覺，現代開發中較少使用。
 
@@ -1051,7 +1011,7 @@ let x = 10;
 
 ---
 
-#### 8.2 `let` 宣告
+#### 5.2 `let` 宣告
 
 `let` 是 ES6 (ECMAScript 2015) 中引入的變數宣告方式，解決了 `var` 的一些問題。
 
@@ -1076,7 +1036,7 @@ let x = 10;
 
 ---
 
-#### 8.3 `const` 宣告
+#### 5.3 `const` 宣告
 
 `const` 是 ES6 中引入的，用於宣告常數 (Constant)。一旦宣告後，變數的值不可改變。
 
@@ -1104,7 +1064,7 @@ let x = 10;
 
 ---
 
-#### 8.4 三種宣告方式比較
+#### 5.4 三種宣告方式比較
 
 | 特性                              | `var`                       | `let`                    | `const`                  |
 | --------------------------------- | --------------------------- | ------------------------ | ------------------------ |
@@ -1116,7 +1076,7 @@ let x = 10;
 
 ---
 
-#### 8.5 使用建議
+#### 5.5 使用建議
 
 1. **優先使用 `const`**：能使用常數的情況下，儘量使用 `const`，以避免意外改動變數值。
 2. **需要改變值時使用 `let`**：如果變數的值需要更新，則使用 `let`。
@@ -1126,7 +1086,9 @@ let x = 10;
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 9. Temporal Dead Zone 暫時性死區
+---
+
+### 6. Temporal Dead Zone 暫時性死區
 
 在 JavaScript 中，`let` 和 `const` 宣告的變數有一個特殊的行為，稱為 **Temporal Dead Zone (TDZ, 暫時性死區)**。這是一個變數在宣告之前無法被存取的範圍。
 
@@ -1248,7 +1210,199 @@ TDZ 的設計是為了讓程式碼更安全，避免開發者在變數尚未初�
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 10. Closure 閉包
+---
+
+### 7. Prototype and Inheritance 原型與繼承
+
+### Prototype and Inheritance 原型與繼承
+
+在 JavaScript 中，物件(Object)的原型機制(Prototype Mechanism)是核心概念之一。原型允許物件透過繼承(Inheritance)共享屬性和方法，提高程式碼的重用性和效率。
+
+---
+
+#### 原型 (Prototype)
+
+- **原型(Prototype)** 是每個 JavaScript 物件的隱藏屬性，指向另一個物件（即原型物件）。物件可以通過其原型來繼承屬性和方法。
+- 每個物件都有一個內部屬性 `[[Prototype]]`，在 ES6 中可以使用 `Object.getPrototypeOf(obj)` 來存取。
+
+##### Prototype 與 `__proto__`
+
+- `__proto__` 是早期用來存取物件的原型的方式，但現在建議使用 `Object.getPrototypeOf(obj)` 和 `Object.setPrototypeOf(obj, prototype)`。
+- 範例：
+
+  ```javascript
+  const obj = {};
+  console.log(obj.__proto__); // [Object: null prototype] {}
+  console.log(Object.getPrototypeOf(obj)); // [Object: null prototype] {}
+  ```
+
+---
+
+#### 原型鏈 (Prototype Chain)
+
+- 原型鏈是物件透過原型屬性連結起來的鏈式結構。
+- 如果在物件中找不到某個屬性或方法，JavaScript 會沿著原型鏈向上查找，直到找到為止。如果整個鏈都找不到，則返回 `undefined`。
+- 範例：
+
+  ```javascript
+  const obj = { name: "Alice" };
+  console.log(obj.toString()); // 物件的 `toString()` 是從原型 Object.prototype 繼承來的
+  ```
+
+---
+
+#### Object.create()
+
+- `Object.create(prototype)` 是用來建立一個具有指定原型的物件。
+- 範例：
+
+  ```javascript
+  const parent = { greet: "Hello" };
+  const child = Object.create(parent);
+  console.log(child.greet); // "Hello"
+  ```
+
+---
+
+#### Constructor Function 建構函數
+
+- 建構函數(Constructor Function)是一種用來生成物件的特殊函數。物件會自動繼承建構函數的原型。
+- 範例：
+
+  ```javascript
+  function Person(name) {
+    this.name = name;
+  }
+  Person.prototype.greet = function () {
+    return `Hello, ${this.name}`;
+  };
+
+  const alice = new Person("Alice");
+  console.log(alice.greet()); // "Hello, Alice"
+  ```
+
+---
+
+#### ES6 Class 語法
+
+- ES6 引入了 `class` 語法，讓物件的原型繼承更容易書寫和理解。`class` 其實是 `prototype` 的語法糖。
+- 範例：
+
+  ```javascript
+  class Person {
+    constructor(name) {
+      this.name = name;
+    }
+
+    greet() {
+      return `Hello, ${this.name}`;
+    }
+  }
+
+  const bob = new Person("Bob");
+  console.log(bob.greet()); // "Hello, Bob"
+  ```
+
+---
+
+#### 繼承 (Inheritance)
+
+##### 使用原型鏈繼承
+
+- 物件可以通過原型鏈來繼承其他物件的屬性和方法。
+- 範例：
+
+  ```javascript
+  const parent = { greet: "Hello" };
+  const child = Object.create(parent);
+  console.log(child.greet); // "Hello"
+  ```
+
+##### ES6 Class 繼承
+
+- 使用 `extends` 關鍵字進行繼承。
+- 範例：
+
+  ```javascript
+  class Animal {
+    constructor(name) {
+      this.name = name;
+    }
+
+    speak() {
+      return `${this.name} makes a noise.`;
+    }
+  }
+
+  class Dog extends Animal {
+    speak() {
+      return `${this.name} barks.`;
+    }
+  }
+
+  const dog = new Dog("Rex");
+  console.log(dog.speak()); // "Rex barks."
+  ```
+
+---
+
+#### 原型方法 (Prototype Methods)
+
+##### Object.prototype.toString()
+
+- `Object.prototype.toString()` 是所有物件繼承的一個方法，用來返回物件的類型資訊。
+- 範例：
+
+  ```javascript
+  const obj = {};
+  console.log(obj.toString()); // "[object Object]"
+  ```
+
+##### Object.prototype.hasOwnProperty()
+
+- `Object.prototype.hasOwnProperty()` 用來檢查某個屬性是否存在於物件本身（而非原型鏈中）。
+- 範例：
+
+  ```javascript
+  const obj = { name: "Alice" };
+  console.log(obj.hasOwnProperty("name")); // true
+  console.log(obj.hasOwnProperty("toString")); // false（toString 是從原型繼承的）
+  ```
+
+---
+
+#### 原型的注意事項
+
+**修改原型**：
+
+- 修改物件的原型可能會影響所有從該原型繼承的物件，因此要謹慎操作。
+- 範例：
+
+  ```javascript
+  const obj = {};
+  Object.prototype.newMethod = function () {
+    return "New Method";
+  };
+  console.log(obj.newMethod()); // "New Method"
+  ```
+
+**避免過度依賴原型鏈**：
+
+- 原型鏈的層級過多可能導致性能問題，尤其是在查找屬性時。
+
+---
+
+#### Prototype 總結
+
+- 原型(Prototype)是 JavaScript 繼承的基礎。物件透過原型鏈(Prototype Chain)共享屬性和方法。
+- ES6 引入 `class` 語法，簡化了原型和繼承的操作。
+- 熟練掌握原型和繼承概念，能幫助你更高效地設計 JavaScript 程式。
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 8. Closure 閉包
 
 #### 什麼是閉包？
 
@@ -1439,9 +1593,341 @@ iifeFuncs[2](); // 2
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 11. Garbage Collection 垃圾回收機制
+---
 
-### 11. Garbage Collection 垃圾回收機制
+### 9. Error Handling 錯誤處理
+
+在 JavaScript 中，錯誤處理（Error Handling）是編寫可靠和穩定程式碼的重要部分。透過正確的錯誤處理，我們可以捕捉和處理程式執行時發生的異常（Exception），從而避免程式崩潰。
+
+#### 9.1 錯誤類型
+
+1. **Syntax Error 語法錯誤**  
+   發生在解析程式碼時，例如缺少括號或分號。
+
+2. **Reference Error 參考錯誤**  
+   當你嘗試引用一個不存在的變數時會發生。
+
+3. **Type Error 類型錯誤**  
+   當一個操作或函數被應用到一個不適當的類型時發生。
+
+4. **Range Error 範圍錯誤**  
+   當一個數值不在允許的範圍內時發生，例如調用數字方法時的範圍錯誤。
+
+5. **Eval Error 評估錯誤**  
+   與 `eval()` 函數有關的錯誤，不常見。
+
+#### 9.2 錯誤處理機制
+
+JavaScript 提供了`try...catch`語句來處理錯誤。
+
+```javascript
+try {
+  // 嘗試執行的代碼
+} catch (error) {
+  // 如果發生錯誤，執行這裡的代碼
+} finally {
+  // 無論是否發生錯誤，都會執行
+}
+```
+
+- **try**: 包含可能會拋出錯誤的代碼。
+- **catch**: 當錯誤發生時，執行此區塊。`error`是錯誤對象，包含錯誤信息。
+- **finally**: 無論是否發生錯誤，最終都會執行此區塊（可選）。
+
+#### 9.3 錯誤拋出 (Throwing Errors)
+
+使用`throw`語句手動拋出錯誤，這可以用來創建自定義錯誤。
+
+```javascript
+function divide(a, b) {
+  if (b === 0) {
+    throw new Error("Division by zero");
+  }
+  return a / b;
+}
+```
+
+#### 9.4 自定義錯誤類型
+
+可以通過擴展`Error`類來創建自定義錯誤類型。
+
+```javascript
+class CustomError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "CustomError";
+  }
+}
+
+try {
+  throw new CustomError("This is a custom error");
+} catch (error) {
+  console.error(error.name + ": " + error.message);
+}
+```
+
+#### 9.5 常見錯誤處理策略
+
+1. **Graceful Degradation 優雅降級**  
+   在錯誤發生時，保證系統或應用能夠繼續運行，或提供替代功能。
+
+2. **Fail Fast 快速失敗**  
+   在錯誤發生時，立即停止程序的執行，以防止系統進一步損壞。
+
+3. **Logging 錯誤記錄**  
+   將錯誤詳細信息記錄下來，以便將來進行調試和分析。
+
+#### 9.6 錯誤處理最佳實踐
+
+- 儘量使用`try...catch`來捕獲可能拋出錯誤的操作。
+- 使用`finally`來清理資源，例如關閉文件或釋放內存。
+- 在適當的情況下使用自定義錯誤類型，以提供更多上下文。
+- 確保在錯誤發生時，必要的錯誤信息被記錄以便診斷。
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 10. Call Stack 呼叫堆疊
+
+#### 什麼是 Call Stack？
+
+在 JavaScript 中，**Call Stack（呼叫堆疊）** 是一種資料結構，用來記錄程式執行時函式呼叫的順序。它是一個 **LIFO（Last In, First Out，後進先出）** 的結構，最新的函式呼叫會被放在堆疊的頂端，執行完成後再移除。
+
+#### Call Stack 的工作流程
+
+1. 當一個函式被呼叫時，會被加入到 **Call Stack** 的頂端。
+2. 函式執行完成後會從 **Call Stack** 中移除。
+3. JavaScript 以同步方式（synchronous execution）逐一執行 **Call Stack** 中的函式。
+
+---
+
+#### 例子：Call Stack 的基本運作
+
+以下是一個簡單範例，展示 **Call Stack** 的工作流程：
+
+```javascript
+function foo() {
+  console.log("執行 foo");
+  bar(); // 呼叫 bar 函式
+}
+
+function bar() {
+  console.log("執行 bar");
+}
+
+foo(); // 呼叫 foo 函式
+```
+
+##### Call Stack 操作步驟
+
+1. `foo()` 被呼叫，加入 Call Stack。
+2. `foo` 開始執行，並在內部呼叫了 `bar()`，將 `bar()` 加入 Call Stack。
+3. `bar()` 執行完成後，從 Call Stack 移除。
+4. `foo()` 執行完成後，從 Call Stack 移除。
+
+執行順序如下：
+
+```bash
+Call Stack:
+1. foo()
+2. bar() (加入)
+3. bar() (移除)
+4. foo() (移除)
+```
+
+---
+
+#### JavaScript 為何使用 Call Stack？
+
+JavaScript 是單執行緒（single-threaded）的程式語言，不能同時執行多個程式碼片段。因此，**Call Stack** 用來管理程式碼的執行順序，確保每一個函式依序執行。這是 JavaScript 非同步行為（如事件監聽和 Promise）背後的基礎。
+
+---
+
+#### 堆疊溢出（Stack Overflow）
+
+如果函式呼叫過多且未正確完成，**Call Stack** 可能會溢出（Stack Overflow），導致程式崩潰。
+
+##### 範例：無窮遞迴（Infinite Recursion）
+
+```javascript
+function recursive() {
+  recursive(); // 無窮遞迴，永遠不會停止
+}
+
+recursive(); // 呼叫 recursive 函式
+```
+
+執行上述程式碼時，`recursive()` 不斷呼叫自己，造成 **Call Stack** 無法清空，最後導致堆疊溢出。
+
+---
+
+#### 非同步行為與 Event Loop（事件循環）
+
+雖然 JavaScript 是同步的，但它透過 **Event Loop（事件循環）** 和 **Callback Queue（回呼佇列）** 來處理非同步行為。非同步操作（如 `setTimeout` 或 `Promise`）不會直接加入 **Call Stack**，而是被排到 **Callback Queue**，等到 **Call Stack** 清空後才執行。
+
+##### 範例：非同步操作的 Call Stack 流程
+
+```javascript
+console.log("1");
+
+setTimeout(() => {
+  console.log("2");
+}, 1000);
+
+console.log("3");
+```
+
+執行順序：
+
+1. `console.log("1")` 加入 Call Stack，執行後移除。
+2. `setTimeout` 加入 Call Stack，定時器啟動，回呼函式加入 **Callback Queue**，`setTimeout` 從 Call Stack 移除。
+3. `console.log("3")` 加入 Call Stack，執行後移除。
+4. 當 **Call Stack** 清空後，事件循環檢查 **Callback Queue**，將回呼函式加入 **Call Stack**，執行 `console.log("2")`。
+
+執行結果：
+
+```bash
+1
+3
+2
+```
+
+---
+
+#### Call Stack 總結
+
+- **Call Stack（呼叫堆疊）** 是 JavaScript 的核心機制，用來管理函式呼叫的執行順序。
+- 它是同步的，採用 **LIFO（後進先出）** 原則。
+- 過多的函式呼叫可能導致 **Stack Overflow（堆疊溢出）**。
+- 非同步行為透過 **Event Loop（事件循環）** 和 **Callback Queue（回呼佇列）** 來進行管理。
+
+了解 **Call Stack** 是理解 JavaScript 執行模型的基礎，尤其在處理非同步程式碼時非常重要。
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 11. Memory Management 記憶體管理
+
+在 JavaScript 中，記憶體管理主要是指如何分配記憶體以及如何釋放不再使用的記憶體。以下是相關的重點整理：
+
+---
+
+#### **記憶體管理的基本概念**
+
+1. **記憶體分配 (Memory Allocation)**
+
+   - 當我們宣告變數、建立物件或函式時，JavaScript 會自動分配記憶體。
+   - 範例：
+
+     ```javascript
+     let num = 42; // 為數字分配記憶體
+     let obj = { name: "Alice" }; // 為物件分配記憶體
+     ```
+
+2. **記憶體使用 (Memory Usage)**
+
+   - JavaScript 的執行環境（例如瀏覽器中的 V8 引擎）會管理記憶體，包括分配及追蹤使用狀態。
+
+3. **記憶體釋放 (Memory Release)**
+   - 當某些記憶體不再被使用時，JavaScript 會嘗試釋放這些記憶體。這通常由垃圾回收機制（Garbage Collection）完成。
+
+---
+
+#### **垃圾回收 (Garbage Collection)**
+
+1. **什麼是垃圾回收 (Garbage Collection)**
+
+   - JavaScript 是一種高階語言，具有自動垃圾回收機制，無需手動管理記憶體。
+   - 垃圾回收的主要目的是釋放不再使用的記憶體以避免記憶體洩漏（Memory Leak）。
+
+2. **標記-清除演算法 (Mark-and-Sweep Algorithm)**
+
+   - 最常見的垃圾回收方式。
+   - 工作流程：
+     1. **標記 (Mark)**：垃圾回收器會標記所有存活（reachable）的物件。
+     2. **清除 (Sweep)**：未被標記的物件會被視為不再使用，記憶體將被釋放。
+
+3. **可達性 (Reachability)**
+   - 一個物件是否存活的判斷標準是「可達性」。
+   - 可達的物件包括：
+     - 全域物件（Global Object），例如 `window`。
+     - 函式的局部變數和參數。
+     - 被其他存活物件引用的物件。
+
+---
+
+#### **常見的記憶體問題**
+
+1. **記憶體洩漏 (Memory Leak)**
+
+   - 當物件不再需要使用，但未被垃圾回收器釋放，導致記憶體不斷累積。
+   - 常見原因：
+     - **全域變數 (Global Variables)**：未正確清理的全域變數可能會永久存在。
+     - **閉包 (Closure)**：閉包可能導致某些變數無法被垃圾回收。
+     - **未清理的 DOM 引用**：移除 DOM 元素時未清理相關事件監聽器或引用。
+
+2. **如何避免記憶體洩漏**：
+   - 使用 `let` 或 `const` 宣告區域變數，避免使用 `var`。
+   - 在不需要使用的時候，主動解除對物件的引用。
+   - 移除不再需要的事件監聽器。
+   - 避免不必要的全域變數。
+
+---
+
+#### **記憶體最佳化 (Memory Optimization)**
+
+1. **減少記憶體使用**
+
+   - 避免建立過大的資料結構。
+   - 使用更高效的資料型別，例如 `Map` 或 `Set`。
+
+2. **清理不必要的物件引用**
+
+   - 範例：在函式結束時，讓不必要的物件被垃圾回收。
+
+     ```javascript
+     function processData() {
+       let largeData = new Array(1000000).fill("data");
+       // 處理資料
+       largeData = null; // 主動清理引用
+     }
+     ```
+
+3. **使用工具監控記憶體**
+   - 使用瀏覽器開發工具（例如 Chrome DevTools）中的「記憶體分析」功能來檢查記憶體使用情況。
+
+---
+
+#### **示例：追蹤記憶體洩漏**
+
+以下是一個可能導致記憶體洩漏的範例，以及如何修復：
+
+```javascript
+// 記憶體洩漏範例
+let element = document.getElementById("button");
+element.addEventListener("click", () => {
+  console.log("Button clicked!");
+});
+// 如果 element 被移除，但事件監聽器未清理，會導致洩漏
+
+// 修復方式
+element.removeEventListener("click", handler);
+element = null; // 移除引用，允許垃圾回收
+```
+
+---
+
+#### **結論**
+
+記憶體管理在 JavaScript 中雖然由執行環境自動處理，但了解其工作原理以及潛在問題，可以幫助我們撰寫更高效、穩定的程式。避免記憶體洩漏並進行適當的最佳化，能提升應用程式的效能並減少不必要的資源消耗。
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 12. Garbage Collection 垃圾回收機制
 
 JavaScript 的垃圾回收機制 (Garbage Collection, GC) 是一個自動化的記憶體管理過程，負責回收不再使用的記憶體資源，避免記憶體洩漏 (Memory Leak)。以下是 Garbage Collection 的運作方式與相關概念整理：
 
@@ -1536,311 +2022,531 @@ JavaScript 提供一些工具幫助開發者分析記憶體使用情況，檢測
 
 ---
 
-#### 總結
+#### Garbage Collection 總結
 
 JavaScript 的垃圾回收機制是自動化的，但開發者仍需注意合理管理記憶體，避免記憶體洩漏問題。了解垃圾回收的工作原理和常見問題，能有效提高應用效能和穩定性。
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 12. Memory Management 記憶體管理
+---
 
-在 JavaScript 中，記憶體管理主要是指如何分配記憶體以及如何釋放不再使用的記憶體。以下是相關的重點整理：
+### 13. Asynchronous Patterns 非同步模式
+
+在 JavaScript 中，非同步程式設計是非常重要的一部分，尤其是在處理 I/O 操作（例如網路請求、資料庫存取等）時。以下是關於非同步模式的完整筆記，涵蓋各種常見的非同步處理方式及其相關概念。
 
 ---
 
-#### **記憶體管理的基本概念**
+#### 1. 非同步模式的背景
 
-1. **記憶體分配 (Memory Allocation)**
-
-   - 當我們宣告變數、建立物件或函式時，JavaScript 會自動分配記憶體。
-   - 範例：
-     ```javascript
-     let num = 42; // 為數字分配記憶體
-     let obj = { name: "Alice" }; // 為物件分配記憶體
-     ```
-
-2. **記憶體使用 (Memory Usage)**
-
-   - JavaScript 的執行環境（例如瀏覽器中的 V8 引擎）會管理記憶體，包括分配及追蹤使用狀態。
-
-3. **記憶體釋放 (Memory Release)**
-   - 當某些記憶體不再被使用時，JavaScript 會嘗試釋放這些記憶體。這通常由垃圾回收機制（Garbage Collection）完成。
+JavaScript 是單執行緒（single-threaded）的語言，使用事件循環（Event Loop）來處理非同步操作。非同步模式允許程式在等待某些操作完成的同時繼續執行其他程式碼，而不會阻塞（blocking）整個應用程式。
 
 ---
 
-#### **垃圾回收 (Garbage Collection)**
+#### 2. 回調函式（Callback Functions）
 
-1. **什麼是垃圾回收 (Garbage Collection)**
-
-   - JavaScript 是一種高階語言，具有自動垃圾回收機制，無需手動管理記憶體。
-   - 垃圾回收的主要目的是釋放不再使用的記憶體以避免記憶體洩漏（Memory Leak）。
-
-2. **標記-清除演算法 (Mark-and-Sweep Algorithm)**
-
-   - 最常見的垃圾回收方式。
-   - 工作流程：
-     1. **標記 (Mark)**：垃圾回收器會標記所有存活（reachable）的物件。
-     2. **清除 (Sweep)**：未被標記的物件會被視為不再使用，記憶體將被釋放。
-
-3. **可達性 (Reachability)**
-   - 一個物件是否存活的判斷標準是「可達性」。
-   - 可達的物件包括：
-     - 全域物件（Global Object），例如 `window`。
-     - 函式的局部變數和參數。
-     - 被其他存活物件引用的物件。
-
----
-
-#### **常見的記憶體問題**
-
-1. **記憶體洩漏 (Memory Leak)**
-
-   - 當物件不再需要使用，但未被垃圾回收器釋放，導致記憶體不斷累積。
-   - 常見原因：
-     - **全域變數 (Global Variables)**：未正確清理的全域變數可能會永久存在。
-     - **閉包 (Closure)**：閉包可能導致某些變數無法被垃圾回收。
-     - **未清理的 DOM 引用**：移除 DOM 元素時未清理相關事件監聽器或引用。
-
-2. **如何避免記憶體洩漏**：
-   - 使用 `let` 或 `const` 宣告區域變數，避免使用 `var`。
-   - 在不需要使用的時候，主動解除對物件的引用。
-   - 移除不再需要的事件監聽器。
-   - 避免不必要的全域變數。
-
----
-
-#### **記憶體最佳化 (Memory Optimization)**
-
-1. **減少記憶體使用**
-
-   - 避免建立過大的資料結構。
-   - 使用更高效的資料型別，例如 `Map` 或 `Set`。
-
-2. **清理不必要的物件引用**
-
-   - 範例：在函式結束時，讓不必要的物件被垃圾回收。
-     ```javascript
-     function processData() {
-       let largeData = new Array(1000000).fill("data");
-       // 處理資料
-       largeData = null; // 主動清理引用
-     }
-     ```
-
-3. **使用工具監控記憶體**
-   - 使用瀏覽器開發工具（例如 Chrome DevTools）中的「記憶體分析」功能來檢查記憶體使用情況。
-
----
-
-#### **示例：追蹤記憶體洩漏**
-
-以下是一個可能導致記憶體洩漏的範例，以及如何修復：
+**回調函式（Callback Functions）** 是最基本的非同步模式，透過將函式作為參數傳遞給其他函式，在非同步操作完成後執行。
 
 ```javascript
-// 記憶體洩漏範例
-let element = document.getElementById("button");
-element.addEventListener("click", () => {
-  console.log("Button clicked!");
-});
-// 如果 element 被移除，但事件監聽器未清理，會導致洩漏
+function doSomethingAsync(callback) {
+  setTimeout(() => {
+    console.log("非同步操作完成");
+    callback(); // 呼叫回調函式
+  }, 1000);
+}
 
-// 修復方式
-element.removeEventListener("click", handler);
-element = null; // 移除引用，允許垃圾回收
+doSomethingAsync(() => {
+  console.log("執行回調函式");
+});
+```
+
+- 優點：簡單易懂，適合小型非同步操作。
+- 缺點：容易導致「回調地獄」（Callback Hell），使程式碼難以維護。
+
+---
+
+#### 3. Promise
+
+**Promise** 是 ES6 引入的一種非同步處理方式，解決了回調地獄的問題。Promise 是一個表示非同步操作最終完成或失敗的物件，具有三種狀態：
+
+1. **Pending（待定）**：初始狀態，尚未完成或失敗。
+2. **Fulfilled（已完成）**：非同步操作成功完成。
+3. **Rejected（已拒絕）**：非同步操作失敗。
+
+```javascript
+const myPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    let success = true;
+    if (success) {
+      resolve("操作成功"); // 完成
+    } else {
+      reject("操作失敗"); // 失敗
+    }
+  }, 1000);
+});
+
+myPromise
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+- **`then()`**：處理完成的結果。
+- **`catch()`**：處理失敗的結果。
+- **`finally()`**：無論成功或失敗都執行。
+
+---
+
+#### 4. Async/Await
+
+**Async/Await** 是基於 Promise 的語法糖，簡化了非同步程式碼的撰寫，使程式碼看起來更像同步執行。
+
+```javascript
+async function fetchData() {
+  try {
+    const result = await myPromise; // 等待 Promise 完成
+    console.log(result);
+  } catch (error) {
+    console.error(error); // 捕捉錯誤
+  }
+}
+
+fetchData();
+```
+
+- **`async`**：用來定義非同步函式。
+- **`await`**：暫停函式執行，等待 Promise 完成。
+
+---
+
+#### 5. Generator 與非同步
+
+**Generator 函式** 是 ES6 引入的功能，可以透過 `yield` 暫停函式執行，與非同步處理結合時，可以模擬 Async/Await 的功能。
+
+```javascript
+function* asyncGenerator() {
+  yield new Promise((resolve) => setTimeout(() => resolve("第一步完成"), 1000));
+  yield new Promise((resolve) => setTimeout(() => resolve("第二步完成"), 1000));
+}
+
+const generator = asyncGenerator();
+generator.next().value.then((result) => {
+  console.log(result);
+  generator.next().value.then((result) => console.log(result));
+});
+```
+
+- 目前 Generator 在非同步處理方面使用較少，因為 Async/Await 更簡潔明瞭。
+
+---
+
+#### 6. Observable（可觀察物件）
+
+**Observable** 是 RxJS（Reactive Extensions for JavaScript）庫中的核心概念，用於處理資料流（data streams）。它的非同步模式提供了更高的彈性，特別適合事件驅動和複雜的非同步操作。
+
+```javascript
+import { Observable } from "rxjs";
+
+const observable = new Observable((subscriber) => {
+  subscriber.next("資料流事件 1");
+  setTimeout(() => subscriber.next("資料流事件 2"), 1000);
+  setTimeout(() => subscriber.complete(), 2000); // 完成
+});
+
+observable.subscribe({
+  next: (data) => console.log(data),
+  complete: () => console.log("資料流完成"),
+});
+```
+
+- **`next()`**：發送資料。
+- **`complete()`**：完成資料流。
+- **`error()`**：處理錯誤。
+
+---
+
+#### 7. 事件循環與非同步執行
+
+JavaScript 的非同步執行基於事件循環（Event Loop），分成以下幾個步驟：
+
+1. **Call Stack（呼叫堆疊）**：同步程式碼執行的主要區域。
+2. **Web APIs**：非同步操作（如 `setTimeout`、HTTP 請求）由瀏覽器或 Node.js 提供的 API 處理。
+3. **Task Queue（任務佇列）**：儲存非同步操作完成後的回調函式。
+4. **Microtask Queue（微任務佇列）**：包含 Promise 的回調函式，優先級高於 Task Queue。
+
+以下是事件循環的示意程式碼：
+
+```javascript
+console.log("同步程式碼開始");
+
+setTimeout(() => console.log("來自 Task Queue 的非同步程式碼"), 0);
+
+Promise.resolve().then(() =>
+  console.log("來自 Microtask Queue 的非同步程式碼")
+);
+
+console.log("同步程式碼結束");
+```
+
+輸出結果：
+
+```bash
+同步程式碼開始
+同步程式碼結束
+來自 Microtask Queue 的非同步程式碼
+來自 Task Queue 的非同步程式碼
 ```
 
 ---
 
-#### **結論**
+#### 8. 常見非同步模式的比較
 
-記憶體管理在 JavaScript 中雖然由執行環境自動處理，但了解其工作原理以及潛在問題，可以幫助我們撰寫更高效、穩定的程式。避免記憶體洩漏並進行適當的最佳化，能提升應用程式的效能並減少不必要的資源消耗。
+| 模式                | 優點                       | 缺點                           | 用途             |
+| ------------------- | -------------------------- | ------------------------------ | ---------------- |
+| 回調函式 (Callback) | 簡單易懂                   | 容易出現回調地獄               | 基本非同步操作   |
+| Promise             | 結構化程式碼，避免回調地獄 | 需要理解 Promise 語法          | 複雜非同步操作   |
+| Async/Await         | 更簡潔的非同步程式碼       | 需搭配 ES6+，需有 Promise 支援 | 現代非同步程式碼 |
+| Generator           | 控制執行流程               | 語法稍微複雜，使用較少         | 高階非同步控制   |
+| Observable          | 支援資料流，適合事件驅動   | 需額外安裝 RxJS 庫             | 複雜事件處理     |
 
 ---
+
+#### 9. 總結
+
+非同步模式是 JavaScript 中的重要部分，選擇適合的模式取決於應用場景：
+
+- 小型非同步操作可使用回調函式或 Promise。
+- 複雜非同步邏輯推薦使用 Async/Await。
+- 若需要處理資料流或事件驅動，Observable 是不錯的選擇。
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 13. Call Stack 呼叫堆疊
+---
 
-#### 什麼是 Call Stack？
+### 14. Promises Promise 機制
 
-在 JavaScript 中，**Call Stack（呼叫堆疊）** 是一種資料結構，用來記錄程式執行時函式呼叫的順序。它是一個 **LIFO（Last In, First Out，後進先出）** 的結構，最新的函式呼叫會被放在堆疊的頂端，執行完成後再移除。
+#### 什麼是 Promise？
 
-#### Call Stack 的工作流程
-
-1. 當一個函式被呼叫時，會被加入到 **Call Stack** 的頂端。
-2. 函式執行完成後會從 **Call Stack** 中移除。
-3. JavaScript 以同步方式（synchronous execution）逐一執行 **Call Stack** 中的函式。
+`Promise` 是 JavaScript 中用來處理非同步操作（Asynchronous Operation）的物件。它可以幫助我們更有效率地管理非同步流程，避免傳統回呼函式（Callback Function）所造成的「回呼地獄」（Callback Hell）。
 
 ---
 
-#### 例子：Call Stack 的基本運作
+#### Promise 的三種狀態（States）
 
-以下是一個簡單範例，展示 **Call Stack** 的工作流程：
+1. **待定狀態（Pending）**  
+   初始狀態，表示非同步操作尚未完成，也尚未有結果。
+
+2. **已解決狀態（Fulfilled / Resolved）**  
+   表示非同步操作已成功完成，並且返回了一個值（Result）。
+
+3. **已拒絕狀態（Rejected）**  
+   表示非同步操作發生錯誤或失敗，並返回一個原因（Reason）。
+
+---
+
+#### Promise 的基本語法
 
 ```javascript
-function foo() {
-  console.log("執行 foo");
-  bar(); // 呼叫 bar 函式
-}
-
-function bar() {
-  console.log("執行 bar");
-}
-
-foo(); // 呼叫 foo 函式
-```
-
-##### Call Stack 操作步驟：
-
-1. `foo()` 被呼叫，加入 Call Stack。
-2. `foo` 開始執行，並在內部呼叫了 `bar()`，將 `bar()` 加入 Call Stack。
-3. `bar()` 執行完成後，從 Call Stack 移除。
-4. `foo()` 執行完成後，從 Call Stack 移除。
-
-執行順序如下：
-
-```
-Call Stack:
-1. foo()
-2. bar() (加入)
-3. bar() (移除)
-4. foo() (移除)
+const promise = new Promise((resolve, reject) => {
+  // 非同步操作
+  if (成功) {
+    resolve(結果); // 將 Promise 狀態改為 "已解決"
+  } else {
+    reject(原因); // 將 Promise 狀態改為 "已拒絕"
+  }
+});
 ```
 
 ---
 
-#### JavaScript 為何使用 Call Stack？
+#### 使用 `.then()` 和 `.catch()`
 
-JavaScript 是單執行緒（single-threaded）的程式語言，不能同時執行多個程式碼片段。因此，**Call Stack** 用來管理程式碼的執行順序，確保每一個函式依序執行。這是 JavaScript 非同步行為（如事件監聽和 Promise）背後的基礎。
+1. `.then()`：用來處理已解決（Fulfilled）的結果。
+2. `.catch()`：用來捕捉已拒絕（Rejected）的錯誤。
 
----
-
-#### 堆疊溢出（Stack Overflow）
-
-如果函式呼叫過多且未正確完成，**Call Stack** 可能會溢出（Stack Overflow），導致程式崩潰。
-
-##### 範例：無窮遞迴（Infinite Recursion）
+範例：
 
 ```javascript
-function recursive() {
-  recursive(); // 無窮遞迴，永遠不會停止
-}
+const promise = new Promise((resolve, reject) => {
+  const success = true;
+  if (success) {
+    resolve("成功的結果");
+  } else {
+    reject("發生錯誤");
+  }
+});
 
-recursive(); // 呼叫 recursive 函式
+promise
+  .then((result) => {
+    console.log("成功:", result);
+  })
+  .catch((error) => {
+    console.error("錯誤:", error);
+  });
 ```
-
-執行上述程式碼時，`recursive()` 不斷呼叫自己，造成 **Call Stack** 無法清空，最後導致堆疊溢出。
 
 ---
 
-#### 非同步行為與 Event Loop（事件循環）
+#### 使用 `.finally()`
 
-雖然 JavaScript 是同步的，但它透過 **Event Loop（事件循環）** 和 **Callback Queue（回呼佇列）** 來處理非同步行為。非同步操作（如 `setTimeout` 或 `Promise`）不會直接加入 **Call Stack**，而是被排到 **Callback Queue**，等到 **Call Stack** 清空後才執行。
+`.finally()` 方法無論 Promise 是成功還是失敗，最後都會執行某段程式碼，適合用於清理資源。
 
-##### 範例：非同步操作的 Call Stack 流程
+範例：
 
 ```javascript
-console.log("1");
-
-setTimeout(() => {
-  console.log("2");
-}, 1000);
-
-console.log("3");
-```
-
-執行順序：
-
-1. `console.log("1")` 加入 Call Stack，執行後移除。
-2. `setTimeout` 加入 Call Stack，定時器啟動，回呼函式加入 **Callback Queue**，`setTimeout` 從 Call Stack 移除。
-3. `console.log("3")` 加入 Call Stack，執行後移除。
-4. 當 **Call Stack** 清空後，事件循環檢查 **Callback Queue**，將回呼函式加入 **Call Stack**，執行 `console.log("2")`。
-
-執行結果：
-
-```
-1
-3
-2
+promise
+  .then((result) => {
+    console.log("成功:", result);
+  })
+  .catch((error) => {
+    console.error("錯誤:", error);
+  })
+  .finally(() => {
+    console.log("完成操作");
+  });
 ```
 
 ---
 
-#### 總結
+#### Promise 的鏈式調用（Chaining）
 
-- **Call Stack（呼叫堆疊）** 是 JavaScript 的核心機制，用來管理函式呼叫的執行順序。
-- 它是同步的，採用 **LIFO（後進先出）** 原則。
-- 過多的函式呼叫可能導致 **Stack Overflow（堆疊溢出）**。
-- 非同步行為透過 **Event Loop（事件循環）** 和 **Callback Queue（回呼佇列）** 來進行管理。
+多個 `.then()` 可以串聯起來形成鏈式調用，讓程式碼更具可讀性。
 
-了解 **Call Stack** 是理解 JavaScript 執行模型的基礎，尤其在處理非同步程式碼時非常重要。
+範例：
+
+```javascript
+new Promise((resolve, reject) => {
+  resolve(1);
+})
+  .then((result) => {
+    console.log(result); // 1
+    return result + 1;
+  })
+  .then((result) => {
+    console.log(result); // 2
+    return result + 1;
+  })
+  .then((result) => {
+    console.log(result); // 3
+  })
+  .catch((error) => {
+    console.error("錯誤:", error);
+  });
+```
+
+---
+
+#### Promise 的靜態方法（Static Methods）
+
+JavaScript 提供了一些靜態方法來輔助操作多個 Promise。
+
+##### 1. `Promise.all()`
+
+當所有的 Promise 都完成（Fulfilled）後，返回一個包含所有結果的陣列。如果有任一 Promise 被拒絕（Rejected），則整個結果被拒絕。
+
+範例：
+
+```javascript
+const promise1 = Promise.resolve(1);
+const promise2 = Promise.resolve(2);
+const promise3 = Promise.resolve(3);
+
+Promise.all([promise1, promise2, promise3])
+  .then((results) => {
+    console.log(results); // [1, 2, 3]
+  })
+  .catch((error) => {
+    console.error("錯誤:", error);
+  });
+```
+
+##### 2. `Promise.race()`
+
+返回第一個完成的 Promise（不論是 Fulfilled 還是 Rejected）。
+
+範例：
+
+```javascript
+const promise1 = new Promise((resolve) => setTimeout(resolve, 100, "慢"));
+const promise2 = new Promise((resolve) => setTimeout(resolve, 50, "快"));
+
+Promise.race([promise1, promise2]).then((result) => {
+  console.log(result); // "快"
+});
+```
+
+##### 3. `Promise.allSettled()`
+
+等待所有 Promise 都完成（不論是 Fulfilled 還是 Rejected），然後返回每個 Promise 的結果物件。
+
+範例：
+
+```javascript
+const promise1 = Promise.resolve(1);
+const promise2 = Promise.reject("錯誤");
+const promise3 = Promise.resolve(3);
+
+Promise.allSettled([promise1, promise2, promise3]).then((results) => {
+  console.log(results);
+  // [
+  //   { status: "fulfilled", value: 1 },
+  //   { status: "rejected", reason: "錯誤" },
+  //   { status: "fulfilled", value: 3 }
+  // ]
+});
+```
+
+##### 4. `Promise.any()`
+
+返回第一個成功（Fulfilled）的 Promise，如果所有 Promise 都被拒絕，則返回一個 AggregateError。
+
+範例：
+
+```javascript
+const promise1 = Promise.reject("錯誤1");
+const promise2 = Promise.reject("錯誤2");
+const promise3 = Promise.resolve("成功");
+
+Promise.any([promise1, promise2, promise3])
+  .then((result) => {
+    console.log(result); // "成功"
+  })
+  .catch((error) => {
+    console.error(error); // 如果全部失敗，返回 AggregateError
+  });
+```
+
+---
+
+#### 與 Async / Await 的結合
+
+`Promise` 通常與 `async/await` 一起使用，使非同步程式碼更具同步化的可讀性。
+
+範例：
+
+```javascript
+async function fetchData() {
+  try {
+    const result = await new Promise((resolve, reject) => {
+      setTimeout(() => resolve("資料載入完成"), 1000);
+    });
+    console.log(result);
+  } catch (error) {
+    console.error("錯誤:", error);
+  }
+}
+
+fetchData();
+```
+
+---
+
+#### 常見的錯誤處理
+
+1. 忘記返回 `Promise` 物件，導致鏈式調用中斷。
+2. 忘記使用 `.catch()` 或 `try/catch` 捕捉錯誤。
+3. 在 `Promise` 中混用同步和非同步邏輯，導致難以追蹤錯誤。
+
+範例：
+
+```javascript
+new Promise((resolve, reject) => {
+  throw new Error("未捕捉的錯誤");
+}).catch((error) => {
+  console.error("捕捉到錯誤:", error);
+});
+```
+
+---
+
+#### Promise 總結
+
+`Promise` 是 JavaScript 中處理非同步操作的核心工具，透過 `.then()`、`.catch()` 和 `.finally()` 來管理流程，並能與 `async/await` 高效結合。此外，透過靜態方法如 `Promise.all()`、`Promise.race()` 等，能輕鬆處理多個非同步操作的情境。學會 `Promise` 的使用，能大幅提升程式碼的可讀性與維護性。
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 14. Event Loop 事件迴圈
+---
 
-在 JavaScript 中，事件迴圈（Event Loop）是負責執行程式碼、收集和處理事件以及執行子任務（sub-tasks）的機制。JavaScript 是單執行緒的語言，這意味著同一時間只能執行一個任務。然而，透過事件迴圈，JavaScript 可以執行非同步操作（如 I/O 操作、定時器等）。
+### 15. Async/Await
 
-以下是事件迴圈的完整筆記：
+#### 概述
 
-#### 單執行緒（Single-threaded）
+`async/await` 是 JavaScript 中用來處理非同步程式碼 (asynchronous code) 的語法糖。它建立在 `Promises` 之上，使得非同步程式碼的撰寫更加簡潔和易讀。
 
-JavaScript 是單執行緒的，這意味著它一次只能執行一個任務。這樣的設計使得 JavaScript 在執行同步任務時非常高效，但在遇到需要等待的任務（如網路請求）時可能會阻塞。
+#### 基本用法
 
-#### 堆疊（Stack）
+1. **Async 函式**：在函式前加上 `async` 關鍵字，該函式就會自動回傳一個 `Promise`。這個函式可以包含 `await` 表達式。
 
-執行緒有一個堆疊（call stack），用來追蹤程式執行的位置。當函式被呼叫時，它會被推入堆疊中；函式執行完畢後，則會從堆疊中移除。
+   ```javascript
+   async function myFunction() {
+     return "Hello, World!";
+   }
 
-#### 任務隊列（Task Queue）
+   myFunction().then((value) => console.log(value)); // 輸出: Hello, World!
+   ```
 
-任務隊列（task queue）是存放待處理的非同步任務的地方。這些任務可能包括事件處理器（event handlers）、定時器（timers），或其他非同步操作。
+2. **Await 表達式**：`await` 用於等待一個 `Promise` 完成。它只能在 `async` 函式內使用，並會暫停函式的執行直到 `Promise` 解決 (resolved)。
 
-#### 微任務（Microtasks）
+   ```javascript
+   async function fetchData() {
+     let response = await fetch("https://api.example.com/data");
+     let data = await response.json();
+     return data;
+   }
 
-微任務（microtasks）是指那些需要在目前執行的程式（script）的執行完畢後立即執行的任務，例如 Promise 的回調（callback）。微任務會在事件迴圈的每次迴轉（tick）結束後執行。
+   fetchData().then((data) => console.log(data));
+   ```
 
-#### 宏任務（Macrotasks）
+#### 錯誤處理
 
-宏任務（macrotasks）是指那些需要在事件迴圈的下一次迴轉執行的任務，例如 setTimeout、setInterval、I/O 操作等。
-
-#### 事件迴圈的運作流程
-
-1. **執行堆疊中的任務**：事件迴圈會先執行堆疊中的同步任務。
-2. **處理微任務**：執行完同步任務後，事件迴圈會處理所有的微任務。
-3. **更新渲染**：如果微任務執行完畢，瀏覽器可能會更新渲染。
-4. **執行宏任務**：事件迴圈會從任務隊列中取出宏任務並執行。
-5. **重複過程**：事件迴圈會不斷重複上述過程。
-
-#### 實例說明
+在 `async/await` 中，可以使用 `try...catch` 語句來捕捉 `Promise` 中的錯誤。
 
 ```javascript
-console.log("Start");
+async function getData() {
+  try {
+    let response = await fetch("https://api.example.com/data");
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
 
-setTimeout(() => {
-  console.log("Timeout");
-}, 0);
-
-Promise.resolve().then(() => {
-  console.log("Promise");
-});
-
-console.log("End");
+getData();
 ```
 
-執行順序：
+#### 與 Promise 的比較
 
-1. `console.log('Start');`
-2. `console.log('End');`
-3. `console.log('Promise');`（微任務）
-4. `console.log('Timeout');`（宏任務）
+- **可讀性**：`async/await` 提供了更接近同步程式碼的寫法，使程式碼更具可讀性和可維護性。
+- **錯誤處理**：透過 `try...catch`，錯誤處理更直觀。
+
+#### 注意事項
+
+1. **阻塞 (Blocking)**：`await` 將暫停函式的執行，直到 `Promise` 完成。因此在一個 `async` 函式中，使用 `await` 時需小心避免阻塞其他操作。
+2. **順序執行**：若需要並行執行多個非同步操作，應避免直接依次使用 `await`，而是可以考慮使用 `Promise.all()`。
+
+   ```javascript
+   async function loadData() {
+     let [data1, data2] = await Promise.all([
+       fetch("https://api.example.com/data1"),
+       fetch("https://api.example.com/data2"),
+     ]);
+
+     // 處理 data1 和 data2
+   }
+   ```
 
 #### 結論
 
-事件迴圈是 JavaScript 處理非同步行為的核心機制。理解事件迴圈的運作對於編寫高效且不會阻塞的 JavaScript 程式非常重要。透過事件迴圈，JavaScript 可以在單執行緒的限制下，優雅地處理大量的非同步操作。
+`async/await` 為 JavaScript 的非同步程式碼提供了一種更簡潔、直觀的處理方式。理解其運作方式和適當使用場景，有助於提升程式碼的整體品質和效率。
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 15. Callback Queue 回調隊列
+---
+
+### 16. Callback Queue 回調隊列
 
 在 JavaScript 的非同步操作中，了解 Callback Queue（回調隊列）是非常重要的。它是事件循環（Event Loop）的一部分，負責處理非同步程式的執行順序。本筆記將完整整理關於 Callback Queue 的核心概念、運作方式及相關細節。
 
@@ -1907,7 +2613,7 @@ console.log("End");
 
 執行結果：
 
-```
+```bash
 Start
 End
 Promise callback
@@ -1928,11 +2634,11 @@ Timeout callback
 3. Micro Task 的優先級高於 Macro Task。
 4. 使用非同步程式設計時，需考慮回調函式的執行順序，以避免混淆。
 
----
-
 **[🔝 Back to Top](#table-of-contents)**
 
-### 16. Microtask Queue 微任務隊列
+---
+
+### 17. Microtask Queue 微任務隊列
 
 #### **什麼是 Microtask Queue？**
 
@@ -2100,324 +2806,175 @@ queueMicrotask(() => {
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 17. Promises Promise 機制
-
-## 什麼是 Promise？
-
-`Promise` 是 JavaScript 中用來處理非同步操作（Asynchronous Operation）的物件。它可以幫助我們更有效率地管理非同步流程，避免傳統回呼函式（Callback Function）所造成的「回呼地獄」（Callback Hell）。
-
 ---
 
-## Promise 的三種狀態（States）
+### 18. Event Loop 事件迴圈
 
-1. **待定狀態（Pending）**  
-   初始狀態，表示非同步操作尚未完成，也尚未有結果。
+在 JavaScript 中，事件迴圈（Event Loop）是負責執行程式碼、收集和處理事件以及執行子任務（sub-tasks）的機制。JavaScript 是單執行緒的語言，這意味著同一時間只能執行一個任務。然而，透過事件迴圈，JavaScript 可以執行非同步操作（如 I/O 操作、定時器等）。
 
-2. **已解決狀態（Fulfilled / Resolved）**  
-   表示非同步操作已成功完成，並且返回了一個值（Result）。
+以下是事件迴圈的完整筆記：
 
-3. **已拒絕狀態（Rejected）**  
-   表示非同步操作發生錯誤或失敗，並返回一個原因（Reason）。
+#### 單執行緒（Single-threaded）
 
----
+JavaScript 是單執行緒的，這意味著它一次只能執行一個任務。這樣的設計使得 JavaScript 在執行同步任務時非常高效，但在遇到需要等待的任務（如網路請求）時可能會阻塞。
 
-## Promise 的基本語法
+#### 堆疊（Stack）
+
+執行緒有一個堆疊（call stack），用來追蹤程式執行的位置。當函式被呼叫時，它會被推入堆疊中；函式執行完畢後，則會從堆疊中移除。
+
+#### 任務隊列（Task Queue）
+
+任務隊列（task queue）是存放待處理的非同步任務的地方。這些任務可能包括事件處理器（event handlers）、定時器（timers），或其他非同步操作。
+
+#### 微任務（Microtasks）
+
+微任務（microtasks）是指那些需要在目前執行的程式（script）的執行完畢後立即執行的任務，例如 Promise 的回調（callback）。微任務會在事件迴圈的每次迴轉（tick）結束後執行。
+
+#### 宏任務（Macrotasks）
+
+宏任務（macrotasks）是指那些需要在事件迴圈的下一次迴轉執行的任務，例如 setTimeout、setInterval、I/O 操作等。
+
+#### 事件迴圈的運作流程
+
+1. **執行堆疊中的任務**：事件迴圈會先執行堆疊中的同步任務。
+2. **處理微任務**：執行完同步任務後，事件迴圈會處理所有的微任務。
+3. **更新渲染**：如果微任務執行完畢，瀏覽器可能會更新渲染。
+4. **執行宏任務**：事件迴圈會從任務隊列中取出宏任務並執行。
+5. **重複過程**：事件迴圈會不斷重複上述過程。
+
+#### 實例說明
 
 ```javascript
-const promise = new Promise((resolve, reject) => {
-  // 非同步操作
-  if (成功) {
-    resolve(結果); // 將 Promise 狀態改為 "已解決"
-  } else {
-    reject(原因); // 將 Promise 狀態改為 "已拒絕"
-  }
-});
-```
+console.log("Start");
 
----
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
 
-## 使用 `.then()` 和 `.catch()`
-
-1. `.then()`：用來處理已解決（Fulfilled）的結果。
-2. `.catch()`：用來捕捉已拒絕（Rejected）的錯誤。
-
-範例：
-
-```javascript
-const promise = new Promise((resolve, reject) => {
-  const success = true;
-  if (success) {
-    resolve("成功的結果");
-  } else {
-    reject("發生錯誤");
-  }
+Promise.resolve().then(() => {
+  console.log("Promise");
 });
 
-promise
-  .then((result) => {
-    console.log("成功:", result);
-  })
-  .catch((error) => {
-    console.error("錯誤:", error);
-  });
+console.log("End");
 ```
 
----
+執行順序：
 
-## 使用 `.finally()`
+1. `console.log('Start');`
+2. `console.log('End');`
+3. `console.log('Promise');`（微任務）
+4. `console.log('Timeout');`（宏任務）
 
-`.finally()` 方法無論 Promise 是成功還是失敗，最後都會執行某段程式碼，適合用於清理資源。
+#### Event Loop 結論
 
-範例：
-
-```javascript
-promise
-  .then((result) => {
-    console.log("成功:", result);
-  })
-  .catch((error) => {
-    console.error("錯誤:", error);
-  })
-  .finally(() => {
-    console.log("完成操作");
-  });
-```
-
----
-
-## Promise 的鏈式調用（Chaining）
-
-多個 `.then()` 可以串聯起來形成鏈式調用，讓程式碼更具可讀性。
-
-範例：
-
-```javascript
-new Promise((resolve, reject) => {
-  resolve(1);
-})
-  .then((result) => {
-    console.log(result); // 1
-    return result + 1;
-  })
-  .then((result) => {
-    console.log(result); // 2
-    return result + 1;
-  })
-  .then((result) => {
-    console.log(result); // 3
-  })
-  .catch((error) => {
-    console.error("錯誤:", error);
-  });
-```
-
----
-
-## Promise 的靜態方法（Static Methods）
-
-JavaScript 提供了一些靜態方法來輔助操作多個 Promise。
-
-### 1. `Promise.all()`
-
-當所有的 Promise 都完成（Fulfilled）後，返回一個包含所有結果的陣列。如果有任一 Promise 被拒絕（Rejected），則整個結果被拒絕。
-
-範例：
-
-```javascript
-const promise1 = Promise.resolve(1);
-const promise2 = Promise.resolve(2);
-const promise3 = Promise.resolve(3);
-
-Promise.all([promise1, promise2, promise3])
-  .then((results) => {
-    console.log(results); // [1, 2, 3]
-  })
-  .catch((error) => {
-    console.error("錯誤:", error);
-  });
-```
-
-### 2. `Promise.race()`
-
-返回第一個完成的 Promise（不論是 Fulfilled 還是 Rejected）。
-
-範例：
-
-```javascript
-const promise1 = new Promise((resolve) => setTimeout(resolve, 100, "慢"));
-const promise2 = new Promise((resolve) => setTimeout(resolve, 50, "快"));
-
-Promise.race([promise1, promise2]).then((result) => {
-  console.log(result); // "快"
-});
-```
-
-### 3. `Promise.allSettled()`
-
-等待所有 Promise 都完成（不論是 Fulfilled 還是 Rejected），然後返回每個 Promise 的結果物件。
-
-範例：
-
-```javascript
-const promise1 = Promise.resolve(1);
-const promise2 = Promise.reject("錯誤");
-const promise3 = Promise.resolve(3);
-
-Promise.allSettled([promise1, promise2, promise3]).then((results) => {
-  console.log(results);
-  // [
-  //   { status: "fulfilled", value: 1 },
-  //   { status: "rejected", reason: "錯誤" },
-  //   { status: "fulfilled", value: 3 }
-  // ]
-});
-```
-
-### 4. `Promise.any()`
-
-返回第一個成功（Fulfilled）的 Promise，如果所有 Promise 都被拒絕，則返回一個 AggregateError。
-
-範例：
-
-```javascript
-const promise1 = Promise.reject("錯誤1");
-const promise2 = Promise.reject("錯誤2");
-const promise3 = Promise.resolve("成功");
-
-Promise.any([promise1, promise2, promise3])
-  .then((result) => {
-    console.log(result); // "成功"
-  })
-  .catch((error) => {
-    console.error(error); // 如果全部失敗，返回 AggregateError
-  });
-```
-
----
-
-## 與 Async / Await 的結合
-
-`Promise` 通常與 `async/await` 一起使用，使非同步程式碼更具同步化的可讀性。
-
-範例：
-
-```javascript
-async function fetchData() {
-  try {
-    const result = await new Promise((resolve, reject) => {
-      setTimeout(() => resolve("資料載入完成"), 1000);
-    });
-    console.log(result);
-  } catch (error) {
-    console.error("錯誤:", error);
-  }
-}
-
-fetchData();
-```
-
----
-
-## 常見的錯誤處理
-
-1. 忘記返回 `Promise` 物件，導致鏈式調用中斷。
-2. 忘記使用 `.catch()` 或 `try/catch` 捕捉錯誤。
-3. 在 `Promise` 中混用同步和非同步邏輯，導致難以追蹤錯誤。
-
-範例：
-
-```javascript
-new Promise((resolve, reject) => {
-  throw new Error("未捕捉的錯誤");
-}).catch((error) => {
-  console.error("捕捉到錯誤:", error);
-});
-```
-
----
-
-## 總結
-
-`Promise` 是 JavaScript 中處理非同步操作的核心工具，透過 `.then()`、`.catch()` 和 `.finally()` 來管理流程，並能與 `async/await` 高效結合。此外，透過靜態方法如 `Promise.all()`、`Promise.race()` 等，能輕鬆處理多個非同步操作的情境。學會 `Promise` 的使用，能大幅提升程式碼的可讀性與維護性。
+事件迴圈是 JavaScript 處理非同步行為的核心機制。理解事件迴圈的運作對於編寫高效且不會阻塞的 JavaScript 程式非常重要。透過事件迴圈，JavaScript 可以在單執行緒的限制下，優雅地處理大量的非同步操作。
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 18. Async/Await
+---
 
-#### 概述
+### 19. Event Delegation 事件委派
 
-`async/await` 是 JavaScript 中用來處理非同步程式碼 (asynchronous code) 的語法糖。它建立在 `Promises` 之上，使得非同步程式碼的撰寫更加簡潔和易讀。
+事件委派（Event Delegation）是一種處理事件的常見設計模式，尤其是在需要對多個子元素的事件進行統一處理時。這種模式的核心思想是將事件監聽器附加到父元素上，而不是每個子元素。當事件發生時，事件冒泡機制（Event Bubbling）會將事件從目標元素冒泡到父元素，這樣我們就可以在父元素上處理事件。
 
-#### 基本用法
+#### 優點
 
-1. **Async 函式**：在函式前加上 `async` 關鍵字，該函式就會自動回傳一個 `Promise`。這個函式可以包含 `await` 表達式。
+1. **性能提升**：將事件監聽器附加到父元素上可以減少在每個子元素上附加監聽器的開銷，特別是在子元素數量龐大時。
+2. **動態元素支持**：對於動態添加的子元素，無需重新附加事件監聽器，只需要確保事件監聽器附加在父元素上。
 
-   ```javascript
-   async function myFunction() {
-     return "Hello, World!";
-   }
+3. **簡化代碼**：減少重複代碼，集中管理事件處理邏輯。
 
-   myFunction().then((value) => console.log(value)); // 輸出: Hello, World!
-   ```
+#### 實現步驟
 
-2. **Await 表達式**：`await` 用於等待一個 `Promise` 完成。它只能在 `async` 函式內使用，並會暫停函式的執行直到 `Promise` 解決 (resolved)。
+1. **選擇父元素**：選擇一個包含目標子元素的父元素。
 
-   ```javascript
-   async function fetchData() {
-     let response = await fetch("https://api.example.com/data");
-     let data = await response.json();
-     return data;
-   }
+2. **附加事件監聽器**：在父元素上附加事件監聽器。
 
-   fetchData().then((data) => console.log(data));
-   ```
+3. **事件處理**：在事件處理函數中使用`event.target`來確定事件發生的具體子元素，並執行相應的邏輯。
 
-#### 錯誤處理
+#### Event Delegation 示例
 
-在 `async/await` 中，可以使用 `try...catch` 語句來捕捉 `Promise` 中的錯誤。
+以下是一個簡單的例子，展示如何使用事件委派來處理多個按鈕的點擊事件：
 
-```javascript
-async function getData() {
-  try {
-    let response = await fetch("https://api.example.com/data");
-    let data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
-
-getData();
+```html
+<ul id="parent">
+  <li class="child">Item 1</li>
+  <li class="child">Item 2</li>
+  <li class="child">Item 3</li>
+</ul>
 ```
 
-#### 與 Promise 的比較
+```javascript
+document.getElementById("parent").addEventListener("click", function (event) {
+  if (event.target && event.target.matches("li.child")) {
+    console.log("Clicked on: " + event.target.textContent);
+  }
+});
+```
 
-- **可讀性**：`async/await` 提供了更接近同步程式碼的寫法，使程式碼更具可讀性和可維護性。
-- **錯誤處理**：透過 `try...catch`，錯誤處理更直觀。
+#### Event Delegation 注意事項
 
-#### 注意事項
+- **事件冒泡（Event Bubbling）**：事件委派依賴事件冒泡機制，因此需要確保事件能夠冒泡到父元素。
 
-1. **阻塞 (Blocking)**：`await` 將暫停函式的執行，直到 `Promise` 完成。因此在一個 `async` 函式中，使用 `await` 時需小心避免阻塞其他操作。
-2. **順序執行**：若需要並行執行多個非同步操作，應避免直接依次使用 `await`，而是可以考慮使用 `Promise.all()`。
+- **事件目標（Event Target）**：使用`event.target`來確定實際觸發事件的元素，這對於進行具體的邏輯處理非常重要。
 
-   ```javascript
-   async function loadData() {
-     let [data1, data2] = await Promise.all([
-       fetch("https://api.example.com/data1"),
-       fetch("https://api.example.com/data2"),
-     ]);
+- **事件類型**：並非所有事件類型都支持冒泡（如`blur`和`focus`事件），因此在使用事件委派時需確認事件類型是否支持冒泡。
 
-     // 處理 data1 和 data2
-   }
-   ```
-
-#### 結論
-
-`async/await` 為 JavaScript 的非同步程式碼提供了一種更簡潔、直觀的處理方式。理解其運作方式和適當使用場景，有助於提升程式碼的整體品質和效率。
+事件委派是一種非常強大且有效的事件處理模式，適合用於需要對大量動態元素進行事件處理的情境。
 
 **[🔝 Back to Top](#table-of-contents)**
 
-### 19. JavaScript 引擎 如 V8 的架構
+---
+
+### 20. DOM Manipulation DOM 操作
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 21. Module System 模塊系統
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 22. Web APIs
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 23. JavaScript Security 安全
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 24. JavaScript Performance 性能
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 25. Data Structures 資料結構
+
+<!-- content -->
+
+**[🔝 Back to Top](#table-of-contents)**
+
+---
+
+### 26. JavaScript 引擎 如 V8 的架構
 
 JavaScript 引擎是負責執行 JavaScript 程式碼的軟體，V8 是其中一個最流行的引擎，主要由 Google 開發，並用於 Chrome 瀏覽器和 Node.js。以下是 V8 引擎的基本架構：
 
